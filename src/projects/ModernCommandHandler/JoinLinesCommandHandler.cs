@@ -21,22 +21,22 @@ namespace ModernCommandHandler
     [Name(nameof(JoinLinesCommandHandler))]
     public class JoinLinesCommandHandler : ICommandHandler<JoinLinesCommandArgs>
     {
-        public string DisplayName => "Join Selected Lines";
+        public string DisplayName => "Wrap sql script as datapatch";
 
         [Import]
         private IEditorOperationsFactoryService EditorOperations = null;
 
         public CommandState GetCommandState(JoinLinesCommandArgs args)
         {
-            return args.TextView.Selection.IsEmpty ? CommandState.Unavailable : CommandState.Available;
+            return !args.SubjectBuffer.ContentType.IsOfType("SQL Server Tools") ? CommandState.Unavailable : CommandState.Available;
         }
 
         public bool ExecuteCommand(JoinLinesCommandArgs args, CommandExecutionContext context)
         {
-            using (context.OperationContext.AddScope(allowCancellation: false, description: "Joining selected lines"))
+            using (context.OperationContext.AddScope(allowCancellation: false, description: "Wrapping. Producing datapatch structure..."))
             {
                 args.TextView.TextBuffer.Insert(0, "// Invoked from modern command handler\r\n");
-                JoinLine.JoinSelectedLines(args.TextView, EditorOperations.GetEditorOperations(args.TextView));
+                DatapatchBuilder.WrapScriptAsDatapatch(args.TextView, EditorOperations.GetEditorOperations(args.TextView));
             }
 
             return true;
