@@ -25,7 +25,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
                 <CommandFlag>DefaultDisabled</CommandFlag>
                 <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
-                    <ButtonText>Join Lines</ButtonText>
+                    <ButtonText>Wrap script as datapatch</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
