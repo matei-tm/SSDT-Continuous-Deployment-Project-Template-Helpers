@@ -1,0 +1,9 @@
+version: 0.1.{build}
+image: Visual Studio 2019
+environment:
+  DeployExtension: false
+cache:
+ - '%USERPROFILE%\.nuget\packages -> **\project.json'
+build_script:
+- ps: >-
+    .\src\build.ps1
