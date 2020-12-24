@@ -1,6 +1,6 @@
 ---
 name: Publish request
-about: Publish master branch
+about: Publish main branch
 title: 'Publish version x.x.x'
 labels: 'publish'
 assignees: ''
@@ -22,7 +22,7 @@ assignees: ''
 - [ ] Run integration tests 
   - [ ] In Visual Studio, from the Test Explorer runt the tests
 - [ ] Commit with message `#xxxx. Publish review completed`
-- [ ] Merge develop changes into master
+- [ ] Merge develop changes into main
   - [ ] Check CI [results](https://travis-ci.org/matei-tm/f-orm-m8) 
 - [ ] Publish to the [Visual Studio Marketplace](https://docs.microsoft.com/en-us/visualstudio/extensibility/walkthrough-publishing-a-visual-studio-extension?view=vs-2019#publish-the-extension-to-the-visual-studio-marketplace) 
 - [ ] Commit empty ```git commit --allow-empty -m "Completed publish closes #xxxx."```
