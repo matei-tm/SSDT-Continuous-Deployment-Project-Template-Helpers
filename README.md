@@ -1,5 +1,11 @@
 # SSDT-Continuous-Deployment-Project-Template-Helpers
 
+[![GitHub release](https://img.shields.io/github/release-pre/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers.svg)](https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/releases/)
+[![Build status](https://ci.appveyor.com/api/projects/status/69dmplbwcjswi7gs/branch/main?svg=true)](https://ci.appveyor.com/project/matei-tm/ssdt-continuous-deployment-project-template-helper/branch/main)
+[![license](https://img.shields.io/github/license/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers.svg)](LICENSE)
+
+
+
 This a Visual Studio extension that add some helpers to the [SSDT-Continuous-Deployment-Project-Template](https://github.com/RadoslavGatev/SSDT-Continuous-Deployment-Project-Template)
 
 # A quick wrapper command for data patches
