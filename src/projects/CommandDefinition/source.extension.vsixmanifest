@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VSIXProject2.31cee324-ddb9-4327-b8bf-69656fab7c79" Version="1.0" Language="en-US" Publisher="Microsoft" />
-        <DisplayName>Backwards Compatible Editor Command Sample</DisplayName>
-        <Description xml:space="preserve">This sample demonstrates how to create a Visual Studio 2017 editor command using modern commanding API introduced in Visual Studio 2017 15.6 update, while preserve backwards compatibility with Visual Studio versions prior to 15.6.</Description>
+        <Identity Id="SSDTDatapatchWrapper.7868B860-066E-4EF7-9C52-BC0084BF9557" Version="0.1" Language="en-US" Publisher="Mircea Matei" />
+        <DisplayName>SSDT datapatch wrapper</DisplayName>
+        <Description xml:space="preserve">SSDT datapatch wrapper for simple DML sql scriptsS</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Version="[15.0.26730,16.0)" Id="Microsoft.VisualStudio.Community" />
