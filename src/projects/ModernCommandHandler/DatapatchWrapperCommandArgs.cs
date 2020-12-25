@@ -12,11 +12,11 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Editor.Commanding;
 
-namespace ModernCommandHandler
+namespace DatapatchWrapperCommandHandler
 {
-    public class JoinLinesCommandArgs : EditorCommandArgs
+    public class DatapatchWrapperCommandArgs : EditorCommandArgs
     {
-        public JoinLinesCommandArgs(ITextView textView, ITextBuffer textBuffer)
+        public DatapatchWrapperCommandArgs(ITextView textView, ITextBuffer textBuffer)
             : base(textView, textBuffer)
         {
         }

@@ -14,28 +14,28 @@ using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
-namespace ModernCommandHandler
+namespace DatapatchWrapperCommandHandler
 {
     [Export(typeof(ICommandHandler))]
     [ContentType("text")]
-    [Name(nameof(JoinLinesCommandHandler))]
-    public class JoinLinesCommandHandler : ICommandHandler<JoinLinesCommandArgs>
+    [Name(nameof(DatapatchWrapperCommandHandler))]
+    public class DatapatchWrapperCommandHandler : ICommandHandler<DatapatchWrapperCommandArgs>
     {
         public string DisplayName => "Wrap sql script as datapatch";
 
         [Import]
-        private IEditorOperationsFactoryService EditorOperations = null;
+        private readonly IEditorOperationsFactoryService _editorOperations = null;
 
-        public CommandState GetCommandState(JoinLinesCommandArgs args)
+        public CommandState GetCommandState(DatapatchWrapperCommandArgs args)
         {
             return !args.SubjectBuffer.ContentType.IsOfType("SQL Server Tools") ? CommandState.Unavailable : CommandState.Available;
         }
 
-        public bool ExecuteCommand(JoinLinesCommandArgs args, CommandExecutionContext context)
+        public bool ExecuteCommand(DatapatchWrapperCommandArgs args, CommandExecutionContext context)
         {
             using (context.OperationContext.AddScope(allowCancellation: false, description: "Wrapping. Producing datapatch structure..."))
             {
-                DatapatchBuilder.WrapScriptAsDatapatch(args.TextView, EditorOperations.GetEditorOperations(args.TextView));
+                DatapatchBuilder.WrapScriptAsDatapatch(args.TextView, _editorOperations.GetEditorOperations(args.TextView));
             }
 
             return true;

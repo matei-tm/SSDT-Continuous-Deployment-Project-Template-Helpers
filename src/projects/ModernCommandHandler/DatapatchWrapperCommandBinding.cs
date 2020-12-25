@@ -12,15 +12,15 @@ using Microsoft.VisualStudio.Editor.Commanding;
 using System;
 using System.ComponentModel.Composition;
 
-namespace ModernCommandHandler
+namespace DatapatchWrapperCommandHandler
 {
-    public class JoinLinesCommandBinding
+    public class DatapatchWrapperCommandBinding
     {
-        private const int JoinLinesCommandId = 0x0100;
-        private const string JoinLinesCommandSet = "4fd0ea18-9f33-43da-ace0-e387656e584c";
+        private const int DatapatchWrapperCommandId = 0x0100;
+        private const string DatapatchWrapperCommandSet = "2b5c526e-368f-47c2-81e3-3ea1eb7c79c7";
 
         [Export]
-        [CommandBinding(JoinLinesCommandSet, JoinLinesCommandId, typeof(JoinLinesCommandArgs))]
-        internal CommandBindingDefinition joinLinesCommandBinding;
+        [CommandBinding(DatapatchWrapperCommandSet, DatapatchWrapperCommandId, typeof(DatapatchWrapperCommandArgs))]
+        internal CommandBindingDefinition datapatchWrapperCommandBinding;
     }
 }

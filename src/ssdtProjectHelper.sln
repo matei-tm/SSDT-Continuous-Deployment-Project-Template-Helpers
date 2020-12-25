@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ssdtProjectHelper", "projects\CommandDefinition\ssdtProjectHelper.csproj", "{B77C328C-88D4-4BBB-B618-E2FBE2C00786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernCommandHandler", "projects\ModernCommandHandler\ModernCommandHandler.csproj", "{2E7C56D8-B9BA-4BCE-85AB-805F9B158C9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatapatchWrapperCommandHandler", "projects\ModernCommandHandler\DatapatchWrapperCommandHandler.csproj", "{2E7C56D8-B9BA-4BCE-85AB-805F9B158C9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatapatchWrapperBuilder", "projects\CommandImplementation\DatapatchWrapperBuilder.csproj", "{E916AE39-340D-4B04-B8A2-94AEE763708B}"
 EndProject

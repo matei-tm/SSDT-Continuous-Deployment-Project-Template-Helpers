@@ -8,7 +8,6 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 ***************************************************************************/
 
-using System;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
 
@@ -22,23 +21,48 @@ namespace DatapatchWrapper
 -- | The content was changed by a tool         |
 -- ---------------------------------------------
 ";
-        public static bool WrapScriptAsDatapatch(ITextView textView, IEditorOperations editorOperations)
+        public static void WrapScriptAsDatapatch(ITextView textView, IEditorOperations editorOperations)
         {
-            var matchCount = 20;
-            var header = textView.TextViewLines.FormattedSpan.Snapshot.GetText(0, matchCount);
-
-            if (wrapperHeader.Substring(0, matchCount) == header)
+            if (PatchIsAppliedAlready(textView))
             {
-                return false;
+                return;
             }
+
+            var quotesApplied = TryReplaceQuotesWithPairs(editorOperations);
+            if (!quotesApplied)
+            {
+                return;
+            }
+
+            AddDatapatchStartSection(textView, editorOperations);
+
+            AddDatapatchEndSection(editorOperations);
+        }
+
+        private static bool TryReplaceQuotesWithPairs(IEditorOperations editorOperations)
+        {
 
             var matches = editorOperations.ReplaceAllMatches("'", "''", true, false, false);
 
             if (matches % 2 == 1)
             {
+#warning TODO undo operation
                 return false;
             }
 
+            return true;
+        }
+
+        private static void AddDatapatchEndSection(IEditorOperations editorOperations)
+        {
+            editorOperations.MoveToEndOfDocument(extendSelection: false);
+            editorOperations.InsertNewLine();
+            editorOperations.InsertText($"', @author = '{System.Environment.UserName}';");
+            editorOperations.InsertNewLine();
+        }
+
+        private static void AddDatapatchStartSection(ITextView textView, IEditorOperations editorOperations)
+        {
             editorOperations.MoveToStartOfDocument(extendSelection: false);
             editorOperations.InsertNewLine();
 
@@ -48,13 +72,19 @@ namespace DatapatchWrapper
             editorOperations.MoveToEndOfLine(extendSelection: false);
             editorOperations.InsertNewLine();
             editorOperations.InsertText("EXEC sp_execute_script @sql ='");
+        }
 
-            editorOperations.MoveToEndOfDocument(extendSelection: false);
-            editorOperations.InsertNewLine();
-            editorOperations.InsertText($"', @author = '{System.Environment.UserName}';");
-            editorOperations.InsertNewLine();
+        private static bool PatchIsAppliedAlready(ITextView textView)
+        {
+            var matchCount = 20;
+            var header = textView.TextViewLines.FormattedSpan.Snapshot.GetText(0, matchCount);
 
-            return true;
+            if (wrapperHeader.Substring(0, matchCount) == header)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -10,16 +10,16 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <Extern href="stdidcmd.h"/>
     <Extern href="vsshlids.h"/>
 
-    <Commands package="guidJoinLinesCommandPackage">
+    <Commands package="guidDatapatchWrapperCommandPackage">
         <Groups>
-            <Group guid="guidJoinLinesCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+            <Group guid="guidDatapatchWrapperCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
                 <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
             </Group>
         </Groups>
 
         <Buttons>
-            <Button guid="guidJoinLinesCommandPackageCmdSet" id="JoinLinesCommandId" priority="0x0100" type="Button">
-                <Parent guid="guidJoinLinesCommandPackageCmdSet" id="MyMenuGroup" />
+            <Button guid="guidDatapatchWrapperCommandPackageCmdSet" id="DatapatchWrapperCommandId" priority="0x0100" type="Button">
+                <Parent guid="guidDatapatchWrapperCommandPackageCmdSet" id="MyMenuGroup" />
                 <Icon guid="guidImages" id="bmpPic1" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DefaultDisabled</CommandFlag>
@@ -31,33 +31,33 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
         </Buttons>
 
         <Bitmaps>
-            <Bitmap guid="guidImages" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+            <Bitmap guid="guidImages" href="Resources\DatapatchWrapperCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
         </Bitmaps>
     </Commands>
 
     <CommandPlacements>
-        <CommandPlacement guid="guidJoinLinesCommandPackageCmdSet" id="JoinLinesCommandId" priority="0x0600">
+        <CommandPlacement guid="guidDatapatchWrapperCommandPackageCmdSet" id="DatapatchWrapperCommandId" priority="0x0600">
             <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
         </CommandPlacement>
     </CommandPlacements>
 
     <KeyBindings>
-        <KeyBinding guid="guidJoinLinesCommandPackageCmdSet" id="JoinLinesCommandId" editor="GUID_TextEditorFactory" key1="K" mod1="Control" key2="J" mod2="Control" />
+        <KeyBinding guid="guidDatapatchWrapperCommandPackageCmdSet" id="DatapatchWrapperCommandId" editor="GUID_TextEditorFactory" key1="M" mod1="Control" key2="D" mod2="Control" />
     </KeyBindings>
 
     <UsedCommands>
-        <UsedCommand guid="guidJoinLinesCommandPackageCmdSet" id="JoinLinesCommandId" />
+        <UsedCommand guid="guidDatapatchWrapperCommandPackageCmdSet" id="DatapatchWrapperCommandId" />
     </UsedCommands>
 
     <Symbols>
-        <GuidSymbol name="guidJoinLinesCommandPackage" value="{552a4344-959e-4e69-b7d8-52c3e6b76819}" />
+        <GuidSymbol name="guidDatapatchWrapperCommandPackage" value="{bbdecb2e-eb7f-4144-80c2-2cb7ab70712a}" />
 
-        <GuidSymbol name="guidJoinLinesCommandPackageCmdSet" value="{4fd0ea18-9f33-43da-ace0-e387656e584c}">
+        <GuidSymbol name="guidDatapatchWrapperCommandPackageCmdSet" value="{2b5c526e-368f-47c2-81e3-3ea1eb7c79c7}">
             <IDSymbol name="MyMenuGroup" value="0x1020" />
-            <IDSymbol name="JoinLinesCommandId" value="0x0100" />
+            <IDSymbol name="DatapatchWrapperCommandId" value="0x0100" />
         </GuidSymbol>
 
-        <GuidSymbol name="guidImages" value="{9955ae5f-11d4-4a30-8689-831d5ef9a1b0}" >
+        <GuidSymbol name="guidImages" value="{547030c7-e1cf-4a38-b005-c0543411620d}" >
             <IDSymbol name="bmpPic1" value="1" />
             <IDSymbol name="bmpPic2" value="2" />
             <IDSymbol name="bmpPicSearch" value="3" />
