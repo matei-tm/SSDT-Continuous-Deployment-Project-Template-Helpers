@@ -32,7 +32,7 @@ namespace DatapatchWrapper
                 return false;
             }
 
-            var matches = editorOperations.ReplaceAllMatches("'", "''", true, true, false);
+            var matches = editorOperations.ReplaceAllMatches("'", "''", true, false, false);
 
             if (matches % 2 == 1)
             {
