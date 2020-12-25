@@ -11,7 +11,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
 
-namespace JoinLineCommandImplementation
+namespace DatapatchWrapper
 {
     public static class DatapatchBuilder
     {

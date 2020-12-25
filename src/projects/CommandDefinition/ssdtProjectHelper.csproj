@@ -231,9 +231,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
+    <ProjectReference Include="..\CommandImplementation\DatapatchWrapperBuilder.csproj">
       <Project>{E916AE39-340D-4B04-B8A2-94AEE763708B}</Project>
-      <Name>CommandImplementation</Name>
+      <Name>DatapatchWrapperBuilder</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

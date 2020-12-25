@@ -7,8 +7,8 @@
     <ProjectGuid>{E916AE39-340D-4B04-B8A2-94AEE763708B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommandImplementation</RootNamespace>
-    <AssemblyName>CommandImplementation</AssemblyName>
+    <RootNamespace>DatapatchWrapper</RootNamespace>
+    <AssemblyName>DatapatchWrapperBuilder</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>

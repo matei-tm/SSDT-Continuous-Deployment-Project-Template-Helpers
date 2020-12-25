@@ -18,6 +18,6 @@
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="ModernCommandHandler" TargetVersion="[15.0.27428,17.0)" Path="|ModernCommandHandler|" />
-        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="CommandImplementation" Path="|CommandImplementation|" AssemblyName="|CommandImplementation;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="DatapatchWrapperBuilder" Path="|DatapatchWrapperBuilder|" AssemblyName="|DatapatchWrapperBuilder;AssemblyName|" />
     </Assets>
 </PackageManifest>

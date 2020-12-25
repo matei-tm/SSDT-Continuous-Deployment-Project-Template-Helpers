@@ -8,7 +8,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 ***************************************************************************/
 
-using JoinLineCommandImplementation;
+using DatapatchWrapper;
 using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;

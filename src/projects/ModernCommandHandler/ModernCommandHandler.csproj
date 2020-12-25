@@ -125,9 +125,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
+    <ProjectReference Include="..\CommandImplementation\DatapatchWrapperBuilder.csproj">
       <Project>{e916ae39-340d-4b04-b8a2-94aee763708b}</Project>
-      <Name>CommandImplementation</Name>
+      <Name>DatapatchWrapperBuilder</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
