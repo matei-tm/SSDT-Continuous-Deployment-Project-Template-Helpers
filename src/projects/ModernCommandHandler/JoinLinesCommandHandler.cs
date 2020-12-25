@@ -35,7 +35,6 @@ namespace ModernCommandHandler
         {
             using (context.OperationContext.AddScope(allowCancellation: false, description: "Wrapping. Producing datapatch structure..."))
             {
-                args.TextView.TextBuffer.Insert(0, "// Invoked from modern command handler\r\n");
                 DatapatchBuilder.WrapScriptAsDatapatch(args.TextView, EditorOperations.GetEditorOperations(args.TextView));
             }
 
