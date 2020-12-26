@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 
-namespace DatapatchWrapperCommandHandler
+namespace SsdtProjectHelperCommanding
 {
     [Export(typeof(ICommandHandler))]
     [ContentType("text")]

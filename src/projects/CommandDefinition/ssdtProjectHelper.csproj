@@ -43,7 +43,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -234,15 +234,15 @@
     <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.7.56\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommandImplementation\DatapatchWrapperBuilder.csproj">
-      <Project>{e916ae39-340d-4b04-b8a2-94aee763708b}</Project>
+    <ProjectReference Include="..\DatapatchWrapper\DatapatchWrapperBuilder.csproj">
+      <Project>{E916AE39-340D-4B04-B8A2-94AEE763708B}</Project>
       <Name>DatapatchWrapperBuilder</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\ModernCommandHandler\DatapatchWrapperCommandHandler.csproj">
+    <ProjectReference Include="..\SsdtProjectHelperCommanding\DatapatchWrapperCommand.csproj">
       <Project>{2e7c56d8-b9ba-4bce-85ab-805f9b158c9e}</Project>
-      <Name>DatapatchWrapperCommandHandler</Name>
+      <Name>DatapatchWrapperCommand</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

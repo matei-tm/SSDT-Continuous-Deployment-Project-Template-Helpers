@@ -15,7 +15,7 @@ namespace DatapatchWrapper
 {
     public static class DatapatchBuilder
     {
-        private static readonly string wrapperHeader =
+        private static readonly string s_WrapperHeader =
 @"-- SSDT-CD Datapatch Wrapper v1.0
 -- ---------------------------------------------
 -- | The content was changed by a tool         |
@@ -46,7 +46,7 @@ namespace DatapatchWrapper
 
             if (matches % 2 == 1)
             {
-#warning TODO undo operation
+                // TODO: implement undo operation for odd number of quotes
                 return false;
             }
 
@@ -67,7 +67,7 @@ namespace DatapatchWrapper
             editorOperations.InsertNewLine();
 
             editorOperations.MoveToStartOfDocument(extendSelection: false);
-            textView.TextBuffer.Insert(0, wrapperHeader);
+            textView.TextBuffer.Insert(0, s_WrapperHeader);
 
             editorOperations.MoveToEndOfLine(extendSelection: false);
             editorOperations.InsertNewLine();
@@ -79,7 +79,7 @@ namespace DatapatchWrapper
             var matchCount = 20;
             var header = textView.TextViewLines.FormattedSpan.Snapshot.GetText(0, matchCount);
 
-            if (wrapperHeader.Substring(0, matchCount) == header)
+            if (s_WrapperHeader.Substring(0, matchCount) == header)
             {
                 return true;
             }

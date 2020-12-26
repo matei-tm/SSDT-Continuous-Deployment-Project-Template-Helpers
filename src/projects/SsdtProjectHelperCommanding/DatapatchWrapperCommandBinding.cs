@@ -9,11 +9,12 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 ***************************************************************************/
 
 using Microsoft.VisualStudio.Editor.Commanding;
-using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics.CodeAnalysis;
 
-namespace DatapatchWrapperCommandHandler
+namespace SsdtProjectHelperCommanding
 {
+    [SuppressMessage("NDepend", "ND1207:NonStaticClassesShouldBeInstantiatedOrTurnedToStatic", Justification = "Used by MEF")]
     public class DatapatchWrapperCommandBinding
     {
         private const int DatapatchWrapperCommandId = 0x0100;
@@ -21,6 +22,9 @@ namespace DatapatchWrapperCommandHandler
 
         [Export]
         [CommandBinding(DatapatchWrapperCommandSet, DatapatchWrapperCommandId, typeof(DatapatchWrapperCommandArgs))]
-        internal CommandBindingDefinition datapatchWrapperCommandBinding;
+        [SuppressMessage("NDepend", "ND1805:FieldsShouldBeDeclaredAsPrivate", Justification = "Used by MEF")]
+        [SuppressMessage("NDepend", "ND1702:PotentiallyDeadFields", Justification = "Used by MEF")]
+        [SuppressMessage("NDepend", "ND1802:FieldsThatCouldHaveALowerVisibility", Justification = "Used by MEF")]
+        internal CommandBindingDefinition _datapatchWrapperCommandBinding;
     }
 }

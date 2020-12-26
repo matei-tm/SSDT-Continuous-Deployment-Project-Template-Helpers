@@ -18,7 +18,7 @@
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" Path="|DatapatchWrapperBuilder|" AssemblyName="|DatapatchWrapperBuilder;AssemblyName|" d:ProjectName="DatapatchWrapperBuilder" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="DatapatchWrapperCommandHandler" TargetVersion="[15.0.27428,17.0]" Path="|DatapatchWrapperCommandHandler|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="DatapatchWrapperBuilder" Path="|DatapatchWrapperBuilder|" AssemblyName="|DatapatchWrapperBuilder;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="DatapatchWrapperCommand" TargetVersion="[15.0.27428,17.0)" Path="|DatapatchWrapperCommand|" />
     </Assets>
 </PackageManifest>
