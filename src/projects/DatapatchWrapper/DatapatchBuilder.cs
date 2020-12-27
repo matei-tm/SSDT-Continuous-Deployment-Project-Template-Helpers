@@ -21,8 +21,10 @@ namespace DatapatchWrapper
 -- | The content was changed by a tool         |
 -- ---------------------------------------------
 ";
-        public static void WrapScriptAsDatapatch(ITextView textView, IEditorOperations editorOperations)
+        public static void WrapScriptAsDatapatch(IEditorOperations editorOperations)
         {
+            var textView = editorOperations.TextView;
+
             if (
                 textView.ScriptContentIsNotValid()
                 ||

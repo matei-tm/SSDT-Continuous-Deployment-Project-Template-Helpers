@@ -35,7 +35,8 @@ namespace SsdtProjectHelperCommanding
         {
             using (context.OperationContext.AddScope(allowCancellation: false, description: "Wrapping. Producing datapatch structure..."))
             {
-                DatapatchBuilder.WrapScriptAsDatapatch(args.TextView, _editorOperations.GetEditorOperations(args.TextView));
+                IEditorOperations editorOperations = _editorOperations.GetEditorOperations(args.TextView);
+                DatapatchBuilder.WrapScriptAsDatapatch(editorOperations);
             }
 
             return true;
