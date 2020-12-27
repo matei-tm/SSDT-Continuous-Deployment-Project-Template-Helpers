@@ -23,7 +23,15 @@ namespace DatapatchWrapper
 ";
         public static void WrapScriptAsDatapatch(ITextView textView, IEditorOperations editorOperations)
         {
-            if (PatchIsAppliedAlready(textView))
+            if (
+                textView.ScriptContentIsNotValid()
+                ||
+                textView.PatchIsAppliedAlready()
+                ||
+                editorOperations.TheQuotesAreNotEven()
+                ||
+                editorOperations.ScriptContentIsNotValidAsPatch()
+                )
             {
                 return;
             }
@@ -39,9 +47,8 @@ namespace DatapatchWrapper
             AddDatapatchEndSection(editorOperations);
         }
 
-        private static bool TryReplaceQuotesWithPairs(IEditorOperations editorOperations)
+        private static bool TryReplaceQuotesWithPairs(this IEditorOperations editorOperations)
         {
-
             var matches = editorOperations.ReplaceAllMatches("'", "''", true, false, false);
 
             if (matches % 2 == 1)
@@ -49,8 +56,25 @@ namespace DatapatchWrapper
                 // TODO: implement undo operation for odd number of quotes
                 return false;
             }
-
             return true;
+        }
+
+
+        /// <summary>
+        /// Counting the number of quotes by a fake replacement
+        /// </summary>
+        /// <param name="editorOperations"></param>
+        /// <returns></returns>
+        private static bool TheQuotesAreNotEven(this IEditorOperations editorOperations)
+        {
+            var matches = editorOperations.ReplaceAllMatches("'", "'", true, false, false);
+
+            if (matches % 2 == 1)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static void AddDatapatchEndSection(IEditorOperations editorOperations)
@@ -74,9 +98,45 @@ namespace DatapatchWrapper
             editorOperations.InsertText("EXEC sp_execute_script @sql ='");
         }
 
-        private static bool PatchIsAppliedAlready(ITextView textView)
+        /// <summary>
+        /// It detects a valid datapatch by containing INSERT, UPDATE or DELETE keywords
+        /// It normalize the keywords as upper case
+        /// TODO: More logic to be added
+        /// </summary>
+        /// <param name="textView"></param>
+        /// <returns></returns>
+        private static bool ScriptContentIsNotValidAsPatch(this IEditorOperations editorOperations)
         {
-            var matchCount = 20;
+            var matchesInsert = editorOperations.ReplaceAllMatches("INSERT", "INSERT", false, true, false);
+            var matchesUpdate = editorOperations.ReplaceAllMatches("UPDATE", "UPDATE", false, true, false);
+            var matchesDelete = editorOperations.ReplaceAllMatches("DELETE", "DELETE", false, true, false);
+
+            if ((matchesInsert + matchesUpdate + matchesDelete) > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// It detects a valid minimal content
+        /// </summary>
+        /// <param name="textView"></param>
+        /// <returns></returns>
+        private static bool ScriptContentIsNotValid(this ITextView textView)
+        {
+            if (textView.TextViewLines.FormattedSpan.Snapshot.Length < 10)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool PatchIsAppliedAlready(this ITextView textView)
+        {
+            var matchCount = 10;
+
             var header = textView.TextViewLines.FormattedSpan.Snapshot.GetText(0, matchCount);
 
             if (s_WrapperHeader.Substring(0, matchCount) == header)
