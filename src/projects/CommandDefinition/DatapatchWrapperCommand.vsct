@@ -31,6 +31,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
       <Button guid="guidDatapatchWrapperCommandPackageCmdSet" id="cmdidChangePromoter" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_ITEM_INCLUDEEXCLUDE" />
         <Icon guid="guidImages" id="bmpPic2" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Promote datapatch</ButtonText>
         </Strings>
@@ -56,8 +57,14 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <UsedCommand guid="guidDatapatchWrapperCommandPackageCmdSet" id="DatapatchWrapperCommandId" />
   </UsedCommands>
 
+  <VisibilityConstraints>
+    <VisibilityItem guid="guidDatapatchWrapperCommandPackageCmdSet" id="cmdidChangePromoter"  context="guidUIContext"/>
+  </VisibilityConstraints>
+
   <Symbols>
     <GuidSymbol name="guidDatapatchWrapperCommandPackage" value="{bbdecb2e-eb7f-4144-80c2-2cb7ab70712a}" />
+
+    <GuidSymbol name="guidUIContext" value="{244a6f96-baf9-4e17-aee9-f37299770d87}" />
 
     <GuidSymbol name="guidDatapatchWrapperCommandPackageCmdSet" value="{2b5c526e-368f-47c2-81e3-3ea1eb7c79c7}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />

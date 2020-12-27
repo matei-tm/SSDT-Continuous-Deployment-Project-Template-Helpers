@@ -21,6 +21,11 @@ namespace DatapatchWrapper
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(DatapatchWrapperCommandPackage.PackageGuidString)]
     [ProvideBindingPath]
+    [ProvideUIContextRule("244a6f96-baf9-4e17-aee9-f37299770d87",
+        name: "UI Context",
+        expression: "sql",
+        termNames: new[] { "sql" },
+        termValues: new[] { "HierSingleSelectionName:.sql$" })]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class DatapatchWrapperCommandPackage : AsyncPackage
     {
