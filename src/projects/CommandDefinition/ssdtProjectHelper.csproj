@@ -241,6 +241,10 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
+    <ProjectReference Include="..\FilesProcessor\FilesProcessor.csproj">
+      <Project>{b6fbf3e2-f57e-463b-824f-e11f43ab5a2a}</Project>
+      <Name>FilesProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SsdtProjectHelperCommanding\DatapatchWrapperCommand.csproj">
       <Project>{2e7c56d8-b9ba-4bce-85ab-805f9b158c9e}</Project>
       <Name>DatapatchWrapperCommand</Name>

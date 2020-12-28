@@ -3,10 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using EnvDTE;
+using FilesProcessor;
+using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
@@ -18,6 +22,8 @@ namespace DatapatchWrapper
     /// </summary>
     internal sealed class ChangePromoter
     {
+        private static DTE _dte;
+
         /// <summary>
         /// Command ID.
         /// </summary>
@@ -81,6 +87,9 @@ namespace DatapatchWrapper
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new ChangePromoter(package, commandService);
+
+            _dte = await package.GetServiceAsync(typeof(DTE)) as DTE;
+            Assumes.Present(_dte);
         }
 
         /// <summary>
@@ -93,17 +102,58 @@ namespace DatapatchWrapper
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "ChangePromoter";
+            var message = "Confirm promotion?";
+            var messageWarning = "Only datapatches with a name ending in '.all.sql' and BuildAction = 'None' are allowed!";
+            var title = "ChangePromoter";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            var item = _dte.SelectedItems.Item(1).ProjectItem;
+
+            if (
+                item.Properties.Item("BuildAction").Value.ToString() != "None"
+                ||
+                item.Properties.Item("Extension").Value.ToString() != ".sql"
+                ||
+                !item.Properties.Item("FileName").Value.ToString().Contains(".all.sql"))
+            {
+                VsShellUtilities.ShowMessageBox(
+                    this.package,
+                    messageWarning,
+                    title,
+                    OLEMSGICON.OLEMSGICON_INFO,
+                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+                return;
+            }
+            else
+            {
+                var answer = VsShellUtilities.ShowMessageBox(
+                    this.package,
+                    message,
+                    title,
+                    OLEMSGICON.OLEMSGICON_INFO,
+                    OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+                if (answer == (int)MessageBoxAnswer.No) { return; }
+            }
+
+
+            var filePath = item.Properties.Item("FullPath").Value.ToString();
+            AddTheFilleToDatapaches(filePath);
         }
+
+        private void AddTheFilleToDatapaches(string filePath)
+        {
+            var siblingFilesManager = new SiblingFilesManager(filePath);
+            siblingFilesManager.ProcessFiles();
+
+        }
+    }
+
+    enum MessageBoxAnswer
+    {
+        Yes = 6,
+        No = 7
     }
 }
