@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SsdtProjectHelper.Common;
 
 namespace FilesProcessor
 {
     public class SiblingFilesManager
     {
+        private readonly IList<ProcessingResult> _processingResults;
+
         public string ReferenceFilePath { get; }
         public string MainDatapatchPattern { get; }
 
@@ -18,9 +21,10 @@ namespace FilesProcessor
         {
             ReferenceFilePath = filePath;
             MainDatapatchPattern = mainDatapatchPattern;
+            _processingResults = new List<ProcessingResult>();
         }
 
-        public void ProcessFiles()
+        public IEnumerable<ProcessingResult> ProcessFiles()
         {
             var siblings = GetAllSiblings();
 
@@ -28,6 +32,8 @@ namespace FilesProcessor
             {
                 AppendReferenceString(siblings);
             }
+
+            return _processingResults;
         }
 
         private IEnumerable<FileInfo> GetAllSiblings()
@@ -50,21 +56,21 @@ namespace FilesProcessor
             }
             catch (DirectoryNotFoundException dirNotFound)
             {
-                // TODO
+                _processingResults.Add(new ProcessingResult(ResultType.Error, dirNotFound.Message));
             }
             catch (UnauthorizedAccessException unAuthDir)
             {
-                // TODO
+                _processingResults.Add(new ProcessingResult(ResultType.Error, unAuthDir.Message));
             }
             catch (PathTooLongException longPath)
             {
-                // TODO
+                _processingResults.Add(new ProcessingResult(ResultType.Error, longPath.Message));
             }
         }
 
         private string BuildReferenceString()
         {
-            var fileInfo = new System.IO.FileInfo(ReferenceFilePath);
+            var fileInfo = new FileInfo(ReferenceFilePath);
             //todo GetRelativePath 
             return $":r ..\\all\\{fileInfo.Name}";
         }

@@ -3,16 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq;
 using EnvDTE;
 using FilesProcessor;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using SsdtProjectHelper.Common;
 using Task = System.Threading.Tasks.Task;
 
 namespace DatapatchWrapper
@@ -28,6 +27,9 @@ namespace DatapatchWrapper
         /// Command ID.
         /// </summary>
         public const int CommandId = 0x0101;
+        private const string AllowedFilesPattern = ".all.sql";
+        private const string AllowedExtension = ".sql";
+        private const string TargetFileForPromotionPattern = "main.datapatch.sql";
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -102,24 +104,20 @@ namespace DatapatchWrapper
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var message = "Confirm promotion?";
-            var messageWarning = "Only datapatches with a name ending in '.all.sql' and BuildAction = 'None' are allowed!";
-            var title = "ChangePromoter";
-
             var item = _dte.SelectedItems.Item(1).ProjectItem;
 
             if (
                 item.Properties.Item("BuildAction").Value.ToString() != "None"
                 ||
-                item.Properties.Item("Extension").Value.ToString() != ".sql"
+                item.Properties.Item("Extension").Value.ToString() != AllowedExtension
                 ||
-                !item.Properties.Item("FileName").Value.ToString().Contains(".all.sql"))
+                !item.Properties.Item("FileName").Value.ToString().Contains(AllowedFilesPattern))
             {
                 VsShellUtilities.ShowMessageBox(
                     this.package,
-                    messageWarning,
-                    title,
-                    OLEMSGICON.OLEMSGICON_INFO,
+                    Properties.Resource.ChangePromoterUsageWarning,
+                    Properties.Resource.ChangePromoterTitle,
+                    OLEMSGICON.OLEMSGICON_WARNING,
                     OLEMSGBUTTON.OLEMSGBUTTON_OK,
                     OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
@@ -129,8 +127,8 @@ namespace DatapatchWrapper
             {
                 var answer = VsShellUtilities.ShowMessageBox(
                     this.package,
-                    message,
-                    title,
+                    Properties.Resource.ConfirmPromotionMessage,
+                    Properties.Resource.ChangePromoterTitle,
                     OLEMSGICON.OLEMSGICON_INFO,
                     OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
                     OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
@@ -145,14 +143,24 @@ namespace DatapatchWrapper
 
         private void PromoteTheFileToDatapaches(string filePath)
         {
-            var siblingFilesManager = new SiblingFilesManager(filePath: filePath, mainDatapatchPattern: "main.datapatch.sql");
-            siblingFilesManager.ProcessFiles();
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var log = Package.GetGlobalService(typeof(SVsActivityLog)) as IVsActivityLog;
+
+            var siblingFilesManager = new SiblingFilesManager(filePath: filePath, mainDatapatchPattern: TargetFileForPromotionPattern);
+            var results = siblingFilesManager.ProcessFiles();
+
+            if (log != null && results.Any())
+            {
+                foreach (var result in results)
+                {
+                    log.LogEntry(
+                    (uint)result.ResultType,
+                    ToString(),
+                    string.Format(CultureInfo.CurrentCulture, "Promote the file to datapatches log: {0}", result.Content));
+                }
+            }
         }
     }
 
-    enum MessageBoxAnswer
-    {
-        Yes = 6,
-        No = 7
-    }
+
 }
