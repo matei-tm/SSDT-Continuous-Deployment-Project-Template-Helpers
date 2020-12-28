@@ -140,14 +140,13 @@ namespace DatapatchWrapper
 
 
             var filePath = item.Properties.Item("FullPath").Value.ToString();
-            AddTheFilleToDatapaches(filePath);
+            PromoteTheFileToDatapaches(filePath);
         }
 
-        private void AddTheFilleToDatapaches(string filePath)
+        private void PromoteTheFileToDatapaches(string filePath)
         {
-            var siblingFilesManager = new SiblingFilesManager(filePath);
+            var siblingFilesManager = new SiblingFilesManager(filePath: filePath, mainDatapatchPattern: "main.datapatch.sql");
             siblingFilesManager.ProcessFiles();
-
         }
     }
 

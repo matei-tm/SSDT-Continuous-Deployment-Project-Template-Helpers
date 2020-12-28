@@ -12,10 +12,12 @@ namespace FilesProcessor
     public class SiblingFilesManager
     {
         public string ReferenceFilePath { get; }
+        public string MainDatapatchPattern { get; }
 
-        public SiblingFilesManager(string filePath)
+        public SiblingFilesManager(string filePath, string mainDatapatchPattern)
         {
-            this.ReferenceFilePath = filePath;
+            ReferenceFilePath = filePath;
+            MainDatapatchPattern = mainDatapatchPattern;
         }
 
         public void ProcessFiles()
@@ -32,7 +34,7 @@ namespace FilesProcessor
         {
             var referenceFileFolder = new DirectoryInfo(ReferenceFilePath).Parent;
 
-            return referenceFileFolder.Parent.EnumerateFiles("main.datapatch.sql", SearchOption.AllDirectories);
+            return referenceFileFolder.Parent.EnumerateFiles(MainDatapatchPattern, SearchOption.AllDirectories);
         }
 
         private void AppendReferenceString(IEnumerable<FileInfo> siblingFiles)
