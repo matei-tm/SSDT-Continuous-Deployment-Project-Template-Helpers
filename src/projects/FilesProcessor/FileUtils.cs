@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace FilesProcessor
 {
@@ -34,6 +35,19 @@ namespace FilesProcessor
             }
 
             return relativePath;
+        }
+
+        public static string ComputeMD5HashString(this string filePath)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    var hashByteArray = md5.ComputeHash(fileStream);
+                    var result = BitConverter.ToString(hashByteArray).Replace("-", "").ToLowerInvariant();
+                    return result;
+                }
+            }
         }
     }
 }

@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using SsdtProjectHelper.Common;
+[assembly: InternalsVisibleTo("SsdtProjectHelper.Tests")]
 
 namespace FilesProcessor
 {
@@ -50,8 +52,8 @@ namespace FilesProcessor
                 foreach (var targetFile in siblingFiles)
                 {
                     var referenceString = BuildReferenceString(targetFile);
-                    AddDatapatchReference(targetFile, referenceString);
-                    _processingResults.Add(new ProcessingResult(ResultType.Info, targetFile.FullName));
+                    var result = AddDatapatchReference(targetFile, referenceString);
+                    _processingResults.Add(result);
                 }
             }
             catch (DirectoryNotFoundException dirNotFound)
@@ -78,14 +80,24 @@ namespace FilesProcessor
             return $":r {relativePath}";
         }
 
-        private bool AddDatapatchReference(FileInfo fileInfo, string referenceString)
+        internal ProcessingResult AddDatapatchReference(FileInfo fileInfo, string referenceString)
         {
+            using (var streamReader = new StreamReader(fileInfo.FullName))
+            {
+                var contents = streamReader.ReadToEnd();
+
+                if (contents.Contains(referenceString))
+                {
+                    return new ProcessingResult(ResultType.Warning, fileInfo.FullName);
+                }
+            }
+
             using (var streamWriter = fileInfo.AppendText())
             {
                 streamWriter.WriteLine(referenceString);
             }
 
-            return true;
+            return new ProcessingResult(ResultType.Info, fileInfo.FullName);
         }
     }
 }

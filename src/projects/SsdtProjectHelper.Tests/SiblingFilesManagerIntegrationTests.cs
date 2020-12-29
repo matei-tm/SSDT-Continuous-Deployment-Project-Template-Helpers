@@ -76,6 +76,47 @@ namespace FilesProcessor.Integration.Tests
             Assert.IsTrue(result.Where(r => r.ResultType == ResultType.Info).Count() == 2);
         }
 
+        [TestMethod()]
+        public void DoesNotApplyDatapatchTwiceTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
+            siblingFilesManager.ProcessFiles();
+
+            var fileHashFirstPass = _pathSibling02File.ComputeMD5HashString();
+
+            siblingFilesManager.ProcessFiles();
+
+            var fileHashSecondPass = _pathSibling02File.ComputeMD5HashString();
+
+            Assert.AreEqual(fileHashFirstPass, fileHashSecondPass);
+        }
+
+        [TestMethod()]
+        public void DoesApplyDatapatchTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
+            siblingFilesManager.ProcessFiles();
+
+            var result = siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
+
+            Assert.AreEqual(result.Content, _pathSibling02File);
+            Assert.AreEqual(result.ResultType, ResultType.Info);
+        }
+
+        [TestMethod()]
+        public void DoesWarnApplyingTwiceDatapatchTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
+            siblingFilesManager.ProcessFiles();
+
+            siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
+            var result = siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
+
+            Assert.AreEqual(result.Content, _pathSibling02File);
+            Assert.AreEqual(result.ResultType, ResultType.Warning);
+        }
+
+
         [TestCleanup]
         public void TestCleanup()
         {
