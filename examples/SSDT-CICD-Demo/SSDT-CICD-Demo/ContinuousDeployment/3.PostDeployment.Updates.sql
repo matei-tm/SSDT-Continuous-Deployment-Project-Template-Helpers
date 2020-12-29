@@ -8,3 +8,11 @@ data after the schema update took place.
 Example invocation:
 EXEC sp_execute_script @sql = 'UPDATE Table....', @author = 'Your Name'
 */
+IF '($DatabaseName)' = 'targetDb01'
+BEGIN
+    :r \Datapatches\targetDb01\_.main.datapatch.sql
+END
+IF '($DatabaseName)' = 'targetDb02'
+BEGIN
+    :r \Datapatches\targetDb02\_.main.datapatch.sql
+END

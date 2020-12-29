@@ -62,11 +62,18 @@
     <Folder Include="ContinuousDeployment\StoredProcedures" />
     <Folder Include="Scripts" />
     <Folder Include="ContinuousDeployment\Tables" />
+    <Folder Include="ContinuousDeployment\Datapatches" />
+    <Folder Include="ContinuousDeployment\Datapatches\common" />
+    <Folder Include="ContinuousDeployment\Datapatches\targetDb01" />
+    <Folder Include="ContinuousDeployment\Datapatches\targetDb02" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ContinuousDeployment\StoredProcedures\sp_generate_merge.sql" />
     <Build Include="ContinuousDeployment\StoredProcedures\sp_execute_cd_script.sql" />
     <Build Include="ContinuousDeployment\Tables\__MigrationLog.sql" />
+    <None Include="ContinuousDeployment\Datapatches\common\fix01.datapatch.all.sql" />
+    <None Include="ContinuousDeployment\Datapatches\targetDb01\_.main.datapatch.sql" />
+    <None Include="ContinuousDeployment\Datapatches\targetDb02\_.main.datapatch.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
