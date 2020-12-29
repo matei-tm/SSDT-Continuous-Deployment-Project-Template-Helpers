@@ -47,11 +47,11 @@ namespace FilesProcessor
         {
             try
             {
-                var referenceString = BuildReferenceString();
-
                 foreach (var targetFile in siblingFiles)
                 {
+                    var referenceString = BuildReferenceString(targetFile);
                     AddDatapatchReference(targetFile, referenceString);
+                    _processingResults.Add(new ProcessingResult(ResultType.Info, targetFile.FullName));
                 }
             }
             catch (DirectoryNotFoundException dirNotFound)
@@ -68,11 +68,14 @@ namespace FilesProcessor
             }
         }
 
-        private string BuildReferenceString()
+        private string BuildReferenceString(FileInfo currentFile)
         {
             var fileInfo = new FileInfo(ReferenceFilePath);
-            //todo GetRelativePath 
-            return $":r ..\\all\\{fileInfo.Name}";
+            var referenceFilePath = fileInfo.FullName;
+            var currentFilePath = currentFile.FullName;
+            var relativePath = currentFilePath.GetRelativePath(referenceFilePath);
+
+            return $":r {relativePath}";
         }
 
         private bool AddDatapatchReference(FileInfo fileInfo, string referenceString)
