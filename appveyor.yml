@@ -18,5 +18,4 @@ deploy:
    draft: false
    prerelease: true
    on:
-     branch: main
      APPVEYOR_REPO_TAG: true 
