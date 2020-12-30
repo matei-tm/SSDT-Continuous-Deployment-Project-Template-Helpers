@@ -1,4 +1,4 @@
-version: 0.1.{build}
+version: 0.1.{build}-{branch}
 image: Visual Studio 2019
 environment:
   DeployExtension: false
@@ -9,3 +9,11 @@ build_script:
     .\src\build.ps1
 artifacts:
  - path: .\src\projects\CommandDefinition\bin\Release\*.vsix
+deploy:
+  - provider: GitHub
+    artifact: /.*\.vsix/
+    draft: false
+    prerelease: true
+    on:
+      branch: main
+      APPVEYOR_REPO_TAG: true 
