@@ -66,6 +66,8 @@
     <Folder Include="ContinuousDeployment\Datapatches\common" />
     <Folder Include="ContinuousDeployment\Datapatches\targetDb01" />
     <Folder Include="ContinuousDeployment\Datapatches\targetDb02" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ContinuousDeployment\StoredProcedures\sp_generate_merge.sql" />
@@ -74,6 +76,7 @@
     <None Include="ContinuousDeployment\Datapatches\common\fix01.datapatch.all.sql" />
     <None Include="ContinuousDeployment\Datapatches\targetDb01\_.main.datapatch.sql" />
     <None Include="ContinuousDeployment\Datapatches\targetDb02\_.main.datapatch.sql" />
+    <Build Include="dbo\Tables\sampleData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
