@@ -7,15 +7,18 @@
 
 This a Visual Studio extension that add some helpers to the [SSDT-Continuous-Deployment-Project-Template](https://github.com/RadoslavGatev/SSDT-Continuous-Deployment-Project-Template)
 
-# A quick wrapper command for data patches
+- A quick wrapper command for datapatches
+- A change promoter of common datapatches
 
-In order to capture changes into migration tables a datapatch should be applied through **sp_execute_cd_script**. Using the quick wrapper the user can create a datapatch as a plain script with DML statements (INSERT/UPDATE/DELETE) and transform it as parameter to **sp_execute_cd_script**
+# The quick wrapper command for datapatches
+
+In order to capture changes into the migration table a datapatch should be applied through **sp_execute_cd_script**. Using the quick wrapper the user can create a datapatch as a plain script with DML statements (INSERT/UPDATE/DELETE) and transform it as parameter to **sp_execute_cd_script**
 
 ![datapatch-wrapper](docs/media/datapatchwrapper-howto.gif)
 
-# A change promoter of data patches to sibling projects that shares the same schema
+# The change promoter of common datapatches to sibling folders that aggregates the fixes for different deployments
 
-If the base schema is distributed to several independent databases, this tool will help promoting the datapatch to several sibling projects.
+If the base schema is distributed to several independent databases, this tool will help promoting the datapatch to several sibling folders. It will add a SQLCMD reference of the selected script to all matching destinations.
 It works with a naming convention. All the files that are matching the pattern "*.all.sql" can be promoted to all sibling files matching "*.main.datapatch.sql"
 
 ![changepromoter-howto](docs/media/changepromoter-howto.gif)
@@ -29,3 +32,7 @@ It works with a naming convention. All the files that are matching the pattern "
 - the destination file must be in a folder of the same level as the subject
 
 ![changepromo-hier](docs/media/changepromo-hier.png)
+
+# Requirements
+
+A database project created from the template provided by [SSDT-Continuous-Deployment-Project-Template](https://marketplace.visualstudio.com/items?itemName=SolvSoftware.SSDT-Continuous-Deployment-Project-Template)
