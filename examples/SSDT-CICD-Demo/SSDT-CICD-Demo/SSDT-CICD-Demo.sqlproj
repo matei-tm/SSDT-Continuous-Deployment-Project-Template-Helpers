@@ -77,6 +77,7 @@
     <None Include="ContinuousDeployment\Datapatches\targetDb01\_.main.datapatch.sql" />
     <None Include="ContinuousDeployment\Datapatches\targetDb02\_.main.datapatch.sql" />
     <Build Include="dbo\Tables\sampleData.sql" />
+    <None Include="ContinuousDeployment\Datapatches\common\fix02.datapatch.all.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
