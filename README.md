@@ -16,6 +16,14 @@ In order to capture changes into the migration table a datapatch should be appli
 
 ![datapatch-wrapper](docs/media/datapatchwrapper-howto.gif)
 
+## Constraints to qualify for wrapping
+
+- the file must be opened in the current document tab
+- the file must be part of a SSDT Database project
+- the file should have a sql extension
+- the file must have DML statements (INSERT/UPDATE/DELETE)
+- if it was wrapped already it will not be applied twice
+
 # The change promoter of common datapatches to sibling folders that aggregates the fixes for different deployments
 
 If the base schema is distributed to several independent databases, this tool will help promoting the datapatch to several sibling folders. It will add a SQLCMD reference of the selected script to all matching destinations.
@@ -35,4 +43,10 @@ It works with a naming convention. All the files that are matching the pattern "
 
 # Requirements
 
-A database project created from the template provided by [SSDT-Continuous-Deployment-Project-Template](https://marketplace.visualstudio.com/items?itemName=SolvSoftware.SSDT-Continuous-Deployment-Project-Template)
+1. SSDT Tools 
+![ssdt-installed](docs/media/ssdt-installed.png)
+2. A database project created from the template provided by [SSDT-Continuous-Deployment-Project-Template](https://marketplace.visualstudio.com/items?itemName=SolvSoftware.SSDT-Continuous-Deployment-Project-Template)
+
+# Demo solution
+
+A demo database project structure can be downloaded from [https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo](https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo) 
