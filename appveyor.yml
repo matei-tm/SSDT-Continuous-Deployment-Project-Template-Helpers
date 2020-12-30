@@ -2,19 +2,21 @@ image: Visual Studio 2019
 environment:
   DeployExtension: false
 cache:
- - '%USERPROFILE%\.nuget\packages -> **\project.json'
+  - '%USERPROFILE%\.nuget\packages -> **\project.json'
 build_script:
  - ps: >-
     .\src\build.ps1
+
 artifacts:
  - path: .\src\projects\CommandDefinition\bin\Release\*.vsix
+
 deploy:
  - provider: GitHub
    auth_token:
-    secure: rdw64hv06AMBueHG679z5ekDUViVHMR11D3XdifSyBKi2qdgF0tdrnohcVcUTBxO
+     secure: rdw64hv06AMBueHG679z5ekDUViVHMR11D3XdifSyBKi2qdgF0tdrnohcVcUTBxO
    artifact: /.*\.vsix/
    draft: false
    prerelease: true
- - on:
-   branch: main
-   APPVEYOR_REPO_TAG: true 
+   on:
+     branch: main
+     APPVEYOR_REPO_TAG: true 
