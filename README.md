@@ -66,7 +66,7 @@ The helper updates, in the current SSDT project, the current sql file opened in 
 
 ### The change promoter updated files
 
-The helper updates, in the current SSDT project, all the files matching the pattern "*.main.datapatch.sql" contained in all the folders that are at the same level as the folder that contains the "*.all.sql" file.
+The helper updates, in the current SSDT project, all the files matching the pattern "\*.main.datapatch.sql" contained in all the folders that are at the same level (siblings) as the folder that contains the "\*.all.sql" file (the file used for the promotion).
 
 
 Although I should not overwrite any file, other than those mentioned, during this process, I do not provide any warranty or take any responsibility for the loss of data.
