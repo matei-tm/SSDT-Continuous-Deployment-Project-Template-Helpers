@@ -8,4 +8,4 @@ build_script:
  - ps: >-
     .\src\build.ps1
 artifacts:
- - path: src\projects\CommandDefinition\bin\$(configuration)
+ - path: src\projects\CommandDefinition\bin\$(configuration)\*.vsix
