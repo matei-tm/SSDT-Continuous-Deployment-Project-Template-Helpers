@@ -9,10 +9,12 @@ build_script:
 artifacts:
  - path: .\src\projects\CommandDefinition\bin\Release\*.vsix
 deploy:
-  - provider: GitHub
-    artifact: /.*\.vsix/
-    draft: false
-    prerelease: true
-    on:
-      branch: main
-      APPVEYOR_REPO_TAG: true 
+ - provider: GitHub
+   auth_token:
+    secure: rdw64hv06AMBueHG679z5ekDUViVHMR11D3XdifSyBKi2qdgF0tdrnohcVcUTBxO
+   artifact: /.*\.vsix/
+   draft: false
+   prerelease: true
+ - on:
+   branch: main
+   APPVEYOR_REPO_TAG: true 
