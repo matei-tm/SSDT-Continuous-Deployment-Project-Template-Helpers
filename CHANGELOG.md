@@ -5,6 +5,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.0] - 2020-12-30
+
+### Added
+
+* published version to Marketplace
+* complete implementation for Datapatch Wrapper
+* complete implementation for Change Promoter
+* demo project
+* unit tests project
+
 ## [0.1.0] - 2020-12-24
 
 ### Added
