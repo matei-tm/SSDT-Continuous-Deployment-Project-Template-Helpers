@@ -29,7 +29,7 @@ namespace DatapatchWrapper
         public const int CommandId = 0x0101;
         private const string AllowedFilesPattern = ".all.sql";
         private const string AllowedExtension = ".sql";
-        private const string TargetFileForPromotionPattern = "main.datapatch.sql";
+        private const string TargetFileForPromotionPattern = "*.main.datapatch.sql";
 
         /// <summary>
         /// Command menu group (command set GUID).
