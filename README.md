@@ -16,3 +16,16 @@ In order to capture changes into migration tables a datapatch should be applied 
 # A change promoter of data patches to sibling projects that shares the same schema
 
 If the base schema is distributed to several independent databases, this tool will help promoting the datapatch to several sibling projects.
+It works with a naming convention. All the files that are matching the pattern "*.all.sql" can be promoted to all sibling files matching "*.main.datapatch.sql"
+
+![changepromoter-howto](docs/media/changepromoter-howto.gif)
+
+## Constraints for a valid promotion
+
+- the subject to promotion must match "*.all.sql"
+- the subject to promotion must be a sql script
+- the subject to promotion must have the "Build Action" as "None"
+- the destination file must match "*.main.datapatch.sql"
+- the destination file must be in a folder of the same level as the subject
+
+![changepromo-hier](docs/media/changepromo-hier.png)
