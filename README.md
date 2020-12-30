@@ -50,3 +50,23 @@ It works with a naming convention. All the files that are matching the pattern "
 # Demo solution
 
 A demo database project structure can be downloaded from [https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo](https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo) 
+
+## Changelog
+
+Please see project's [changelog](https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/blob/main/CHANGELOG.md) 
+
+## Disclaimer
+
+**Important:** 
+This extension, being a code generator, will change files in the targeted database project. Use a suitable source control system (eg, git) to protect your code from transient changes.
+ 
+### The datapatch wrapper module updated files
+
+The helper updates, in the current SSDT project, the current sql file opened in the editor tab of Visual Studio
+
+### The change promoter updated files
+
+The helper updates, in the current SSDT project, all the files matching the pattern "*.main.datapatch.sql" contained in all the folders that are at the same level as the folder that contains the "*.all.sql" file.
+
+
+Although I should not overwrite any file, other than those mentioned, during this process, I do not provide any warranty or take any responsibility for the loss of data.

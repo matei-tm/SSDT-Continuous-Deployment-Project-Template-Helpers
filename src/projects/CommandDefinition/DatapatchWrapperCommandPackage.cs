@@ -24,7 +24,6 @@ namespace DatapatchWrapper
     public sealed class DatapatchWrapperCommandPackage : AsyncPackage
     {
         public const string PackageGuidString = "bbdecb2e-eb7f-4144-80c2-2cb7ab70712a";
-        //private static MapperConfiguration s_autoMapperConfiguration;
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
