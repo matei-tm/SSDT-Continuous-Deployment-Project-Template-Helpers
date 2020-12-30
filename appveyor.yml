@@ -4,9 +4,8 @@ environment:
   DeployExtension: false
 cache:
  - '%USERPROFILE%\.nuget\packages -> **\project.json'
-configuration: Release
-platform: Any CPU
-build:
-  project: src\ssdtProjectHelper.sln
+build_script:
+ - ps: >-
+    .\src\build.ps1
 artifacts:
-  - path: src\projects\CommandDefinition\bin\$(configuration)
+ - path: src\projects\CommandDefinition\bin\$(configuration)
