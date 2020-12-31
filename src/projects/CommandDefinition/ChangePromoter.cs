@@ -53,7 +53,12 @@ namespace DatapatchWrapper
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+
+            var menuItem = new OleMenuCommand(Execute, menuCommandID)
+            {
+                Supported = false
+            };
+           
             commandService.AddCommand(menuItem);
         }
 
@@ -107,23 +112,12 @@ namespace DatapatchWrapper
             var item = _dte.SelectedItems.Item(1).ProjectItem;
 
             if (
-                item.Properties.Item("BuildAction").Value.ToString() != "None"
-                ||
-                item.Properties.Item("Extension").Value.ToString() != AllowedExtension
-                ||
-                !item.Properties.Item("FileName").Value.ToString().Contains(AllowedFilesPattern))
-            {
-                VsShellUtilities.ShowMessageBox(
-                    this.package,
-                    Properties.Resource.ChangePromoterUsageWarning,
-                    Properties.Resource.ChangePromoterTitle,
-                    OLEMSGICON.OLEMSGICON_WARNING,
-                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-                return;
-            }
-            else
+                item.Name.Contains(AllowedFilesPattern)
+                &&
+                item.Properties?.Item("BuildAction")?.Value.ToString() == "None"
+                &&
+                item.Properties.Item("Extension").Value.ToString() == AllowedExtension
+                )
             {
                 var answer = VsShellUtilities.ShowMessageBox(
                     this.package,
@@ -135,7 +129,18 @@ namespace DatapatchWrapper
 
                 if (answer == (int)MessageBoxAnswer.No) { return; }
             }
+            else
+            {
+                VsShellUtilities.ShowMessageBox(
+                    this.package,
+                    Properties.Resource.ChangePromoterUsageWarning,
+                    Properties.Resource.ChangePromoterTitle,
+                    OLEMSGICON.OLEMSGICON_WARNING,
+                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
+                return;
+            }
 
             var filePath = item.Properties.Item("FullPath").Value.ToString();
             PromoteTheFileToDatapaches(filePath);
