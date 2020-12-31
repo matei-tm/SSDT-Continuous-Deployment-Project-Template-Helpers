@@ -47,6 +47,10 @@ It works with a naming convention. All the files that are matching the pattern "
 ![ssdt-installed](docs/media/ssdt-installed.png)
 2. A database project created from the template provided by [SSDT-Continuous-Deployment-Project-Template](https://marketplace.visualstudio.com/items?itemName=SolvSoftware.SSDT-Continuous-Deployment-Project-Template)
 
+# Installation
+
+[Install from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=matei-tm.ssdtdatapatchwrapper)
+
 # Demo solution
 
 A demo database project structure can be downloaded from [https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo](https://github.com/matei-tm/SSDT-Continuous-Deployment-Project-Template-Helpers/tree/develop/examples/SSDT-CICD-Demo) 
