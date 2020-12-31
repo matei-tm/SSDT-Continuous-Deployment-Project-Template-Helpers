@@ -86,7 +86,7 @@ namespace FilesProcessor
             {
                 var contents = streamReader.ReadToEnd();
 
-                if (contents.Contains(referenceString))
+                if (contents.Contains(referenceString, StringComparison.OrdinalIgnoreCase))
                 {
                     return new ProcessingResult(ResultType.Warning, fileInfo.FullName);
                 }

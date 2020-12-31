@@ -116,6 +116,16 @@ namespace FilesProcessor.Integration.Tests
             Assert.AreEqual(result.ResultType, ResultType.Warning);
         }
 
+        [TestMethod()]
+        public void CheckingForAppliedReferenceIsCaseInsensitiveTest()
+        {
+            var changedPathReferenceFile = _pathReferenceFile.ToUpper();
+            var siblingFilesManager = new SiblingFilesManager(changedPathReferenceFile, MainDatapatchPattern);
+            var result = siblingFilesManager.ProcessFiles();
+
+            Assert.IsTrue(result.Where(r => r.ResultType == ResultType.Info).Count() == 2);
+        }
+
 
         [TestCleanup]
         public void TestCleanup()
