@@ -5,6 +5,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.1] - 2020-12-31
+
+### Fixed
+
+* #17. Change Promoter. Context menu is visible only for sql files. The visibility was deffered to vsct constraint
+* #16. Change Promoter. The checking for existing reference was switched as case insensitive
+
 ## [1.0.0] - 2020-12-30
 
 ### Added
