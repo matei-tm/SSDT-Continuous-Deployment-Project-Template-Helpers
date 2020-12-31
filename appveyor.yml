@@ -16,6 +16,6 @@ deploy:
      secure: rdw64hv06AMBueHG679z5ekDUViVHMR11D3XdifSyBKi2qdgF0tdrnohcVcUTBxO
    artifact: /.*\.vsix/
    draft: false
-   prerelease: true
+   prerelease: false
    on:
      APPVEYOR_REPO_TAG: true 
