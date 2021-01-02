@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ChangePromoter.cs" />
     <Compile Include="DatapatchWrapperCommandPackage.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -259,6 +260,10 @@
     <ProjectReference Include="..\SsdtProjectHelper.Common\SsdtProjectHelper.Common.csproj">
       <Project>{2df1a49f-4d67-4a66-807f-0d2cb2831c04}</Project>
       <Name>SsdtProjectHelper.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SsdtProjectHelper.UI\SsdtProjectHelper.UI.csproj">
+      <Project>{3fdceea4-e415-4fb7-80dc-bc997a9df2ae}</Project>
+      <Name>SsdtProjectHelper.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\SsdtProjectHelperCommanding\DatapatchWrapperCommand.csproj">
       <Project>{2e7c56d8-b9ba-4bce-85ab-805f9b158c9e}</Project>

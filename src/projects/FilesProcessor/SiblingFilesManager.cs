@@ -8,34 +8,51 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using SsdtProjectHelper.Common;
+using SsdtProjectHelper.Common.Interfaces;
+
 [assembly: InternalsVisibleTo("SsdtProjectHelper.Tests")]
 
 namespace FilesProcessor
 {
-    public class SiblingFilesManager
+    public class SiblingFilesManager : ISiblingFilesManager
     {
-        private readonly IList<ProcessingResult> _processingResults;
-
+        public IList<ProcessingResult> ProcessingResults { get; private set; }
+        public string ProjectRootFolder { get; private set; }
+        public IEnumerable<string> SiblingPathsRelativeToProject { get; }
         public string ReferenceFilePath { get; }
         public string MainDatapatchPattern { get; }
 
-        public SiblingFilesManager(string filePath, string mainDatapatchPattern)
+        public SiblingFilesManager(string referenceFilePath, string mainDatapatchPattern, string projectRootFolder)
         {
-            ReferenceFilePath = filePath;
+            ReferenceFilePath = referenceFilePath;
+            ProjectRootFolder = projectRootFolder;
             MainDatapatchPattern = mainDatapatchPattern;
-            _processingResults = new List<ProcessingResult>();
+            ProcessingResults = new List<ProcessingResult>();
+            SiblingPathsRelativeToProject = GetAllSiblings().Select(s => FileUtils.GetRelativePath(ProjectRootFolder, s.FullName));
         }
 
-        public IEnumerable<ProcessingResult> ProcessFiles()
+        public void ProcessSingleFileAsPartialPath(string targetFilePartialPath)
         {
-            var siblings = GetAllSiblings();
-
-            if (siblings.Any())
+            try
             {
-                AppendReferenceString(siblings);
+                var projectRootFolderParent = Directory.GetParent(ProjectRootFolder).FullName;
+                var targetFileFullName = Path.Combine(projectRootFolderParent, targetFilePartialPath);
+                var referenceString = BuildReferenceString(targetFileFullName);
+                var result = AddDatapatchReference(targetFileFullName, referenceString);
+                ProcessingResults.Add(result);
             }
-
-            return _processingResults;
+            catch (DirectoryNotFoundException dirNotFound)
+            {
+                ProcessingResults.Add(new ProcessingResult(ResultType.Error, dirNotFound.Message));
+            }
+            catch (UnauthorizedAccessException unAuthDir)
+            {
+                ProcessingResults.Add(new ProcessingResult(ResultType.Error, unAuthDir.Message));
+            }
+            catch (PathTooLongException longPath)
+            {
+                ProcessingResults.Add(new ProcessingResult(ResultType.Error, longPath.Message));
+            }
         }
 
         private IEnumerable<FileInfo> GetAllSiblings()
@@ -45,59 +62,31 @@ namespace FilesProcessor
             return referenceFileFolder.Parent.EnumerateFiles(MainDatapatchPattern, SearchOption.AllDirectories);
         }
 
-        private void AppendReferenceString(IEnumerable<FileInfo> siblingFiles)
+        private string BuildReferenceString(string currentFilePath)
         {
-            try
-            {
-                foreach (var targetFile in siblingFiles)
-                {
-                    var referenceString = BuildReferenceString(targetFile);
-                    var result = AddDatapatchReference(targetFile, referenceString);
-                    _processingResults.Add(result);
-                }
-            }
-            catch (DirectoryNotFoundException dirNotFound)
-            {
-                _processingResults.Add(new ProcessingResult(ResultType.Error, dirNotFound.Message));
-            }
-            catch (UnauthorizedAccessException unAuthDir)
-            {
-                _processingResults.Add(new ProcessingResult(ResultType.Error, unAuthDir.Message));
-            }
-            catch (PathTooLongException longPath)
-            {
-                _processingResults.Add(new ProcessingResult(ResultType.Error, longPath.Message));
-            }
-        }
-
-        private string BuildReferenceString(FileInfo currentFile)
-        {
-            var fileInfo = new FileInfo(ReferenceFilePath);
-            var referenceFilePath = fileInfo.FullName;
-            var currentFilePath = currentFile.FullName;
-            var relativePath = currentFilePath.GetRelativePath(referenceFilePath);
+            var relativePath = currentFilePath.GetRelativePath(ReferenceFilePath);
 
             return $":r {relativePath}";
         }
 
-        internal ProcessingResult AddDatapatchReference(FileInfo fileInfo, string referenceString)
+        internal ProcessingResult AddDatapatchReference(string targetFileFullPath, string referenceString)
         {
-            using (var streamReader = new StreamReader(fileInfo.FullName))
+            using (var streamReader = new StreamReader(targetFileFullPath))
             {
                 var contents = streamReader.ReadToEnd();
 
                 if (contents.Contains(referenceString, StringComparison.OrdinalIgnoreCase))
                 {
-                    return new ProcessingResult(ResultType.Warning, fileInfo.FullName);
+                    return new ProcessingResult(ResultType.Warning, targetFileFullPath);
                 }
             }
 
-            using (var streamWriter = fileInfo.AppendText())
+            using (var streamWriter = new StreamWriter(targetFileFullPath, true))
             {
                 streamWriter.WriteLine(referenceString);
             }
 
-            return new ProcessingResult(ResultType.Info, fileInfo.FullName);
+            return new ProcessingResult(ResultType.Info, targetFileFullPath);
         }
     }
 }

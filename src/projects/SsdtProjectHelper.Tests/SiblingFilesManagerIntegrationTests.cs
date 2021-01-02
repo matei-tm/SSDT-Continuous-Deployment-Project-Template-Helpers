@@ -12,6 +12,7 @@ namespace FilesProcessor.Integration.Tests
         private const string MainDatapatchPattern = "main.datapatch.sql";
         private static readonly string s_tempFolder = Path.GetTempPath();
         private readonly string _workingFolder = Path.Combine(s_tempFolder, $"ssdtProjectHelper.Tests.{Guid.NewGuid()}");
+        private string _pathProjectRoot;
         private string _pathAll;
         private string _pathSibling01;
         private string _pathSibling02;
@@ -22,6 +23,7 @@ namespace FilesProcessor.Integration.Tests
         [TestInitialize]
         public void TestInitialize()
         {
+            _pathProjectRoot = Path.Combine(_workingFolder, "test.sqlproj");
             _pathAll = Path.Combine(_workingFolder, "All");
             _pathSibling01 = Path.Combine(_workingFolder, "Sibling01");
             _pathSibling02 = Path.Combine(_workingFolder, "Sibling02");
@@ -43,48 +45,47 @@ namespace FilesProcessor.Integration.Tests
         [TestMethod()]
         public void ProcessFilesReturnsResultTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            var result = siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling01File, _pathReferenceFile);
 
-            Assert.IsTrue(result.Any());
+            Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void ProcessFilesHasSibling01FileInResultTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            var result = siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling01File, _pathReferenceFile);
 
-            Assert.IsTrue(result.Where(r => r.Content == _pathSibling01File).Any());
+            Assert.IsTrue(result.Content == _pathSibling01File);
         }
 
         [TestMethod()]
         public void ProcessFilesHasSibling02FileInResultTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            var result = siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
-            Assert.IsTrue(result.Where(r => r.Content == _pathSibling02File).Any());
+            Assert.IsTrue(result.Content == _pathSibling02File);
         }
 
         [TestMethod()]
         public void ProcessFilesHasInfoInResultTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            var result = siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
-            Assert.IsTrue(result.Where(r => r.ResultType == ResultType.Info).Count() == 2);
+            Assert.AreEqual(result.ResultType, ResultType.Info);
         }
 
         [TestMethod()]
         public void DoesNotApplyDatapatchTwiceTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
             var fileHashFirstPass = _pathSibling02File.ComputeMD5HashString();
-
-            siblingFilesManager.ProcessFiles();
+            siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
             var fileHashSecondPass = _pathSibling02File.ComputeMD5HashString();
 
@@ -94,10 +95,9 @@ namespace FilesProcessor.Integration.Tests
         [TestMethod()]
         public void DoesApplyDatapatchTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
 
-            var result = siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
             Assert.AreEqual(result.Content, _pathSibling02File);
             Assert.AreEqual(result.ResultType, ResultType.Info);
@@ -106,11 +106,10 @@ namespace FilesProcessor.Integration.Tests
         [TestMethod()]
         public void DoesWarnApplyingTwiceDatapatchTest()
         {
-            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern);
-            siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
 
-            siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
-            var result = siblingFilesManager.AddDatapatchReference(new FileInfo(_pathSibling02File), _pathReferenceFile);
+            siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling02File, _pathReferenceFile);
 
             Assert.AreEqual(result.Content, _pathSibling02File);
             Assert.AreEqual(result.ResultType, ResultType.Warning);
@@ -120,10 +119,10 @@ namespace FilesProcessor.Integration.Tests
         public void CheckingForAppliedReferenceIsCaseInsensitiveTest()
         {
             var changedPathReferenceFile = _pathReferenceFile.ToUpper();
-            var siblingFilesManager = new SiblingFilesManager(changedPathReferenceFile, MainDatapatchPattern);
-            var result = siblingFilesManager.ProcessFiles();
+            var siblingFilesManager = new SiblingFilesManager(changedPathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.AddDatapatchReference(_pathSibling01File, _pathReferenceFile);
 
-            Assert.IsTrue(result.Where(r => r.ResultType == ResultType.Info).Count() == 2);
+            Assert.IsTrue(result.ResultType == ResultType.Info);
         }
 
 

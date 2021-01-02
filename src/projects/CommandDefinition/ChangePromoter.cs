@@ -4,14 +4,10 @@
 
 using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Linq;
 using EnvDTE;
-using FilesProcessor;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using SsdtProjectHelper.Common;
 using Task = System.Threading.Tasks.Task;
 
 namespace DatapatchWrapper
@@ -21,7 +17,7 @@ namespace DatapatchWrapper
     /// </summary>
     internal sealed class ChangePromoter
     {
-        private static DTE _dte;
+        private static DTE s_dte;
 
         /// <summary>
         /// Command ID.
@@ -58,7 +54,7 @@ namespace DatapatchWrapper
             {
                 Supported = false
             };
-           
+
             commandService.AddCommand(menuItem);
         }
 
@@ -95,8 +91,8 @@ namespace DatapatchWrapper
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new ChangePromoter(package, commandService);
 
-            _dte = await package.GetServiceAsync(typeof(DTE)) as DTE;
-            Assumes.Present(_dte);
+            s_dte = await package.GetServiceAsync(typeof(DTE)) as DTE;
+            Assumes.Present(s_dte);
         }
 
         /// <summary>
@@ -109,7 +105,7 @@ namespace DatapatchWrapper
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var item = _dte.SelectedItems.Item(1).ProjectItem;
+            var item = s_dte.SelectedItems.Item(1).ProjectItem;
 
             if (
                 item.Name.Contains(AllowedFilesPattern)
@@ -119,15 +115,9 @@ namespace DatapatchWrapper
                 item.Properties.Item("Extension").Value.ToString() == AllowedExtension
                 )
             {
-                var answer = VsShellUtilities.ShowMessageBox(
-                    this.package,
-                    Properties.Resource.ConfirmPromotionMessage,
-                    Properties.Resource.ChangePromoterTitle,
-                    OLEMSGICON.OLEMSGICON_INFO,
-                    OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
-                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-                if (answer == (int)MessageBoxAnswer.No) { return; }
+                var itemFullPath = item.Properties.Item("FullPath").Value.ToString();
+                var projectFullName = item.ContainingProject.FullName;
+                Factory.Instance.GetDialog(projectFullName, itemFullPath, TargetFileForPromotionPattern).Invoke();
             }
             else
             {
@@ -141,31 +131,6 @@ namespace DatapatchWrapper
 
                 return;
             }
-
-            var filePath = item.Properties.Item("FullPath").Value.ToString();
-            PromoteTheFileToDatapaches(filePath);
-        }
-
-        private void PromoteTheFileToDatapaches(string filePath)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            var log = Package.GetGlobalService(typeof(SVsActivityLog)) as IVsActivityLog;
-
-            var siblingFilesManager = new SiblingFilesManager(filePath: filePath, mainDatapatchPattern: TargetFileForPromotionPattern);
-            var results = siblingFilesManager.ProcessFiles();
-
-            if (log != null && results.Any())
-            {
-                foreach (var result in results)
-                {
-                    log.LogEntry(
-                    (uint)result.ResultType,
-                    ToString(),
-                    string.Format(CultureInfo.CurrentCulture, "Promote the file to datapatches log: {0}", result.Content));
-                }
-            }
         }
     }
-
-
 }
