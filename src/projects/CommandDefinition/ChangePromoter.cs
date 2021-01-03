@@ -4,10 +4,14 @@
 
 using System;
 using System.ComponentModel.Design;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using EnvDTE;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using SsdtProjectHelper.Common;
 using Task = System.Threading.Tasks.Task;
 
 namespace DatapatchWrapper
@@ -23,7 +27,8 @@ namespace DatapatchWrapper
         /// Command ID.
         /// </summary>
         public const int CommandId = 0x0101;
-        private const string AllowedFilesPattern = ".all.sql";
+        private const string AllowedAllFilesPattern = ".all.sql";
+        private const string AllowedSetFilesPattern = ".set.sql";
         private const string AllowedExtension = ".sql";
         private const string TargetFileForPromotionPattern = "*.main.datapatch.sql";
 
@@ -107,8 +112,7 @@ namespace DatapatchWrapper
             ThreadHelper.ThrowIfNotOnUIThread();
             var item = s_dte.SelectedItems.Item(1).ProjectItem;
 
-            if (
-                item.Name.Contains(AllowedFilesPattern)
+            if ((item.Name.Contains(AllowedAllFilesPattern) || item.Name.Contains(AllowedSetFilesPattern))
                 &&
                 item.Properties?.Item("BuildAction")?.Value.ToString() == "None"
                 &&
@@ -117,7 +121,15 @@ namespace DatapatchWrapper
             {
                 var itemFullPath = item.Properties.Item("FullPath").Value.ToString();
                 var projectFullName = item.ContainingProject.FullName;
-                Factory.Instance.GetDialog(projectFullName, itemFullPath, TargetFileForPromotionPattern).Invoke();
+
+                if (item.Name.Contains(AllowedSetFilesPattern))
+                {
+                    HandlePromotionWithUI(itemFullPath, projectFullName);
+                }
+                else
+                {
+                    HandlePromotionBulkWithoutUI(itemFullPath, projectFullName);
+                }
             }
             else
             {
@@ -130,6 +142,41 @@ namespace DatapatchWrapper
                     OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
                 return;
+            }
+        }
+
+        private static void HandlePromotionWithUI(string itemFullPath, string projectFullName)
+        {
+            Factory.Instance.GetDialog(projectFullName, itemFullPath, TargetFileForPromotionPattern).Invoke();
+        }
+
+        private void HandlePromotionBulkWithoutUI(string itemFullPath, string projectFullName)
+        {
+            var answer = VsShellUtilities.ShowMessageBox(
+           this.package,
+           Properties.Resource.ConfirmPromotionMessage,
+           Properties.Resource.ChangePromoterTitle,
+           OLEMSGICON.OLEMSGICON_INFO,
+           OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
+           OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+            if (answer == (int)MessageBoxAnswer.Yes)
+            {
+                var log = Package.GetGlobalService(typeof(SVsActivityLog)) as IVsActivityLog;
+                var projectRootFolder = Path.GetDirectoryName(projectFullName);
+                var siblingFilesManager = Factory.Instance.GetSiblingFilesManager(referenceFilePath: itemFullPath, mainDatapatchPattern: TargetFileForPromotionPattern, projectRootFolder: projectRootFolder);
+                var results = siblingFilesManager.ProcessAllFiles();
+
+                if (log != null && results.Any())
+                {
+                    foreach (var result in results)
+                    {
+                        log.LogEntry(
+                        (uint)result.ResultType,
+                        ToString(),
+                        string.Format(CultureInfo.CurrentCulture, "Promote the file to datapatches log: {0}", result.Content));
+                    }
+                }
             }
         }
     }

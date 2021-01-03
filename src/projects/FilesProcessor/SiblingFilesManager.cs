@@ -31,6 +31,16 @@ namespace FilesProcessor
             SiblingPathsRelativeToProject = GetAllSiblings().Select(s => FileUtils.GetRelativePath(ProjectRootFolder, s.FullName));
         }
 
+        public IList<ProcessingResult> ProcessAllFiles()
+        {
+            foreach (var targetFilePartialPath in SiblingPathsRelativeToProject)
+            {
+                ProcessSingleFileAsPartialPath(targetFilePartialPath);
+            }
+
+            return ProcessingResults;
+        }
+
         public void ProcessSingleFileAsPartialPath(string targetFilePartialPath)
         {
             try

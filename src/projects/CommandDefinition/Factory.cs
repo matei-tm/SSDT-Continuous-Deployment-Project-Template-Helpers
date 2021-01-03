@@ -88,7 +88,7 @@ namespace DatapatchWrapper
             }
         }
 
-        public static ISiblingFilesManager GetSiblingFilesManager(string referenceFilePath, string mainDatapatchPattern, string projectRootFolder)
+        public ISiblingFilesManager GetSiblingFilesManager(string referenceFilePath, string mainDatapatchPattern, string projectRootFolder)
         {
             var filesManager = new SiblingFilesManager(referenceFilePath, mainDatapatchPattern, projectRootFolder);
             return filesManager;

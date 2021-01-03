@@ -15,5 +15,6 @@ namespace SsdtProjectHelper.Common.Interfaces
         IEnumerable<string> SiblingPathsRelativeToProject { get; }
 
         void ProcessSingleFileAsPartialPath(string targetFilePartialPath);
+        IList<ProcessingResult> ProcessAllFiles();
     }
 }
