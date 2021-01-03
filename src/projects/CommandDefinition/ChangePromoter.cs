@@ -112,17 +112,17 @@ namespace DatapatchWrapper
             ThreadHelper.ThrowIfNotOnUIThread();
             var item = s_dte.SelectedItems.Item(1).ProjectItem;
 
-            if ((item.Name.Contains(AllowedAllFilesPattern) || item.Name.Contains(AllowedSetFilesPattern))
+            if ((item.Name.EndsWith(AllowedAllFilesPattern, StringComparison.OrdinalIgnoreCase) || item.Name.EndsWith(AllowedSetFilesPattern, StringComparison.OrdinalIgnoreCase))
                 &&
                 item.Properties?.Item("BuildAction")?.Value.ToString() == "None"
                 &&
-                item.Properties.Item("Extension").Value.ToString() == AllowedExtension
+                item.Properties.Item("Extension").Value.ToString().ToLower() == AllowedExtension
                 )
             {
                 var itemFullPath = item.Properties.Item("FullPath").Value.ToString();
                 var projectFullName = item.ContainingProject.FullName;
 
-                if (item.Name.Contains(AllowedSetFilesPattern))
+                if (item.Name.EndsWith(AllowedSetFilesPattern, StringComparison.OrdinalIgnoreCase))
                 {
                     HandlePromotionWithUI(itemFullPath, projectFullName);
                 }
@@ -147,11 +147,14 @@ namespace DatapatchWrapper
 
         private static void HandlePromotionWithUI(string itemFullPath, string projectFullName)
         {
-            Factory.Instance.GetDialog(projectFullName, itemFullPath, TargetFileForPromotionPattern).Invoke();
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var configurationDialog = Factory.Instance.GetDialog(projectFullName, itemFullPath, TargetFileForPromotionPattern);
+            configurationDialog.Invoke();
         }
 
         private void HandlePromotionBulkWithoutUI(string itemFullPath, string projectFullName)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var answer = VsShellUtilities.ShowMessageBox(
            this.package,
            Properties.Resource.ConfirmPromotionMessage,

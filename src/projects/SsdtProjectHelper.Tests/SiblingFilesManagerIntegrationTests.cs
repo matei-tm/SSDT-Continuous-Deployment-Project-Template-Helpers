@@ -43,6 +43,43 @@ namespace FilesProcessor.Integration.Tests
         }
 
         [TestMethod()]
+        public void ProcessAllFilesReturnsResultTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.ProcessAllFiles();
+
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod()]
+        public void ProcessAllFilesHasSibling01FileInResultTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.ProcessAllFiles();
+
+            Assert.IsTrue(result.Where(r => r.Content == _pathSibling01File).Any());
+        }
+
+        [TestMethod()]
+        public void ProcessAllFilesHasSibling02FileInResultTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.ProcessAllFiles();
+
+            Assert.IsTrue(result.Where(r => r.Content == _pathSibling02File).Any());
+        }
+
+        [TestMethod()]
+        public void ProcessAllFilesHasInfoInResultTest()
+        {
+            var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
+            var result = siblingFilesManager.ProcessAllFiles();
+
+            Assert.IsTrue(result.Where(r => r.ResultType == ResultType.Info).Count() == 2);
+        }
+
+
+        [TestMethod()]
         public void ProcessFilesReturnsResultTest()
         {
             var siblingFilesManager = new SiblingFilesManager(_pathReferenceFile, MainDatapatchPattern, _pathProjectRoot);
