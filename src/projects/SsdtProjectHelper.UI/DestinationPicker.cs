@@ -35,6 +35,7 @@ namespace SsdtProjectHelper.UI
         public void Invoke()
         {
             InitializeSiblings();
+            TextBoxPromotionSource.Text = $"{_siblingFilesManager.ReferenceFilePath}";
 
             if (_uiShell == null)
             {
@@ -186,7 +187,12 @@ namespace SsdtProjectHelper.UI
             var textBox = sender as TextBox;
             var textBoxText = textBox.Text;
 
-            ButtonSaveCollection.Enabled = !string.IsNullOrEmpty(textBoxText) && IsTheSetNewOrSelectedExisting(textBoxText);
+            ButtonSaveCollection.Enabled =
+                !string.IsNullOrEmpty(textBoxText)
+                &&
+                textBoxText != _configurationStore.DefaultSetName
+                &&
+                IsTheSetNewOrSelectedExisting(textBoxText);
         }
 
         private bool IsTheSetNewOrSelectedExisting(string textBoxText)

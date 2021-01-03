@@ -42,7 +42,9 @@ namespace SsdtProjectHelper.UI
             this.TextBoxCollectionName = new System.Windows.Forms.TextBox();
             this.ButtonSaveCollection = new System.Windows.Forms.Button();
             this.ComboBoxSavedCollections = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelCombo = new System.Windows.Forms.Label();
+            this.LabelPromotionSource = new System.Windows.Forms.Label();
+            this.TextBoxPromotionSource = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // CheckedListBoxSiblings
@@ -54,15 +56,15 @@ namespace SsdtProjectHelper.UI
             this.CheckedListBoxSiblings.HorizontalScrollbar = true;
             this.CheckedListBoxSiblings.Location = new System.Drawing.Point(12, 70);
             this.CheckedListBoxSiblings.Name = "CheckedListBoxSiblings";
-            this.CheckedListBoxSiblings.Size = new System.Drawing.Size(801, 184);
+            this.CheckedListBoxSiblings.Size = new System.Drawing.Size(833, 229);
             this.CheckedListBoxSiblings.TabIndex = 0;
             // 
             // ButtonCancel
             // 
             this.ButtonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonCancel.Location = new System.Drawing.Point(657, 265);
+            this.ButtonCancel.Location = new System.Drawing.Point(583, 306);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
+            this.ButtonCancel.Size = new System.Drawing.Size(128, 23);
             this.ButtonCancel.TabIndex = 1;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
@@ -71,11 +73,11 @@ namespace SsdtProjectHelper.UI
             // ButtonOk
             // 
             this.ButtonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonOk.Location = new System.Drawing.Point(738, 265);
+            this.ButtonOk.Location = new System.Drawing.Point(717, 306);
             this.ButtonOk.Name = "ButtonOk";
-            this.ButtonOk.Size = new System.Drawing.Size(75, 23);
+            this.ButtonOk.Size = new System.Drawing.Size(128, 23);
             this.ButtonOk.TabIndex = 2;
-            this.ButtonOk.Text = "Ok";
+            this.ButtonOk.Text = "Apply changes";
             this.ButtonOk.UseVisualStyleBackColor = true;
             this.ButtonOk.Click += new System.EventHandler(this.ButtonOk_Click);
             // 
@@ -83,7 +85,7 @@ namespace SsdtProjectHelper.UI
             // 
             this.CheckBoxAddAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBoxAddAll.AutoSize = true;
-            this.CheckBoxAddAll.Location = new System.Drawing.Point(12, 268);
+            this.CheckBoxAddAll.Location = new System.Drawing.Point(12, 310);
             this.CheckBoxAddAll.Name = "CheckBoxAddAll";
             this.CheckBoxAddAll.Size = new System.Drawing.Size(83, 17);
             this.CheckBoxAddAll.TabIndex = 3;
@@ -96,14 +98,17 @@ namespace SsdtProjectHelper.UI
             this.LabelInfo.AutoSize = true;
             this.LabelInfo.Location = new System.Drawing.Point(12, 54);
             this.LabelInfo.Name = "LabelInfo";
-            this.LabelInfo.Size = new System.Drawing.Size(179, 13);
+            this.LabelInfo.Size = new System.Drawing.Size(430, 13);
             this.LabelInfo.TabIndex = 4;
-            this.LabelInfo.Text = "Choose the destination for promoting";
+            this.LabelInfo.Text = "Choose the destination for promoting. The changes will be applied to all the sele" +
+    "cted items";
             // 
             // TextBoxCollectionName
             // 
             this.TextBoxCollectionName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TextBoxCollectionName.Location = new System.Drawing.Point(147, 265);
+            this.TextBoxCollectionName.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.TextBoxCollectionName.Location = new System.Drawing.Point(147, 307);
+            this.TextBoxCollectionName.MaxLength = 30;
             this.TextBoxCollectionName.Name = "TextBoxCollectionName";
             this.TextBoxCollectionName.Size = new System.Drawing.Size(207, 20);
             this.TextBoxCollectionName.TabIndex = 5;
@@ -112,11 +117,11 @@ namespace SsdtProjectHelper.UI
             // ButtonSaveCollection
             // 
             this.ButtonSaveCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonSaveCollection.Location = new System.Drawing.Point(360, 264);
+            this.ButtonSaveCollection.Location = new System.Drawing.Point(360, 306);
             this.ButtonSaveCollection.Name = "ButtonSaveCollection";
-            this.ButtonSaveCollection.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSaveCollection.Size = new System.Drawing.Size(128, 23);
             this.ButtonSaveCollection.TabIndex = 6;
-            this.ButtonSaveCollection.Text = "Save";
+            this.ButtonSaveCollection.Text = "Save configuration";
             this.ButtonSaveCollection.UseVisualStyleBackColor = true;
             this.ButtonSaveCollection.Click += new System.EventHandler(this.ButtonSaveCollection_Click);
             // 
@@ -129,22 +134,45 @@ namespace SsdtProjectHelper.UI
             this.ComboBoxSavedCollections.TabIndex = 7;
             this.ComboBoxSavedCollections.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSavedCollections_SelectedIndexChanged);
             // 
-            // label1
+            // LabelCombo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Select a saved collection:";
+            this.LabelCombo.AutoSize = true;
+            this.LabelCombo.Location = new System.Drawing.Point(12, 16);
+            this.LabelCombo.Name = "LabelCombo";
+            this.LabelCombo.Size = new System.Drawing.Size(129, 13);
+            this.LabelCombo.TabIndex = 8;
+            this.LabelCombo.Text = "Select a saved collection:";
+            // 
+            // LabelPromotionSource
+            // 
+            this.LabelPromotionSource.AutoSize = true;
+            this.LabelPromotionSource.Location = new System.Drawing.Point(372, 16);
+            this.LabelPromotionSource.Name = "LabelPromotionSource";
+            this.LabelPromotionSource.Size = new System.Drawing.Size(60, 13);
+            this.LabelPromotionSource.TabIndex = 9;
+            this.LabelPromotionSource.Text = "Reference:";
+            // 
+            // TextBoxPromotionSource
+            // 
+            this.TextBoxPromotionSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxPromotionSource.Location = new System.Drawing.Point(438, 12);
+            this.TextBoxPromotionSource.Name = "TextBoxPromotionSource";
+            this.TextBoxPromotionSource.ReadOnly = true;
+            this.TextBoxPromotionSource.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.TextBoxPromotionSource.Size = new System.Drawing.Size(407, 20);
+            this.TextBoxPromotionSource.TabIndex = 10;
+            this.TextBoxPromotionSource.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // DestinationPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 303);
+            this.ClientSize = new System.Drawing.Size(857, 339);
             this.ControlBox = false;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TextBoxPromotionSource);
+            this.Controls.Add(this.LabelPromotionSource);
+            this.Controls.Add(this.LabelCombo);
             this.Controls.Add(this.ComboBoxSavedCollections);
             this.Controls.Add(this.ButtonSaveCollection);
             this.Controls.Add(this.TextBoxCollectionName);
@@ -154,6 +182,7 @@ namespace SsdtProjectHelper.UI
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.CheckedListBoxSiblings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(800, 300);
             this.Name = "DestinationPicker";
             this.Text = "Destination Picker";
             this.ResumeLayout(false);
@@ -171,6 +200,8 @@ namespace SsdtProjectHelper.UI
         private System.Windows.Forms.TextBox TextBoxCollectionName;
         private System.Windows.Forms.Button ButtonSaveCollection;
         private System.Windows.Forms.ComboBox ComboBoxSavedCollections;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LabelCombo;
+        private System.Windows.Forms.Label LabelPromotionSource;
+        private System.Windows.Forms.TextBox TextBoxPromotionSource;
     }
 }
