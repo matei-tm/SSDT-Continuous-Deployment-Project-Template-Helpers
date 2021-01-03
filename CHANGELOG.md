@@ -5,6 +5,24 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.1.0] - 2021-01-04
+
+### Changed
+
+* #20. Change promoter. The context menu for sql files behaves diferently based on the file termination. Handling change promotions with:
+    - user interface "Destination picker" for "\*.set" matching files 
+    - automatic for "\*.all" files
+
+### Added
+
+* #20. Change promoter. Added basic UI for promotting changes. The UI is presented only for files that matches "\*.set.sql" pattern.
+    - the subject to promotion must match "*.set.sql"
+    - the subject to promotion must be a sql script
+    - the subject to promotion must have the "Build Action" as "None"
+    - the destination file must match "*.main.datapatch.sql"
+    - the destination file must be in a folder of the same level as the subject
+    - the destination file must be checked in the "Destination Picker" dialog box
+
 ## [1.0.1] - 2020-12-31
 
 ### Fixed
