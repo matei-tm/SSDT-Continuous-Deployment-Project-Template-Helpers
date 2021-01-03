@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>SSDT_CICD_Demo</Name>
+    <Name>SSDT-CICD-DEMO-SET</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{47cb74d2-03a6-4246-8363-88de341dd121}</ProjectGuid>
+    <ProjectGuid>{3943bdef-c9a2-49b0-9d89-273abafce870}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>SSDT_CICD_Demo</RootNamespace>
-    <AssemblyName>SSDT_CICD_Demo</AssemblyName>
+    <RootNamespace>SSDT_02_DEMO</RootNamespace>
+    <AssemblyName>SSDT_02_DEMO</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -58,38 +57,48 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="ContinuousDeployment" />
-    <Folder Include="ContinuousDeployment\StaticTables" />
-    <Folder Include="ContinuousDeployment\StoredProcedures" />
-    <Folder Include="Scripts" />
-    <Folder Include="ContinuousDeployment\Tables" />
     <Folder Include="ContinuousDeployment\Datapatches" />
     <Folder Include="ContinuousDeployment\Datapatches\common" />
     <Folder Include="ContinuousDeployment\Datapatches\targetDb01" />
     <Folder Include="ContinuousDeployment\Datapatches\targetDb02" />
+    <Folder Include="ContinuousDeployment\StaticTables" />
+    <Folder Include="ContinuousDeployment\StoredProcedures" />
+    <Folder Include="ContinuousDeployment\Tables" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="ContinuousDeployment\StoredProcedures\sp_generate_merge.sql" />
-    <Build Include="ContinuousDeployment\StoredProcedures\sp_execute_cd_script.sql" />
-    <Build Include="ContinuousDeployment\Tables\__MigrationLog.sql" />
     <None Include="ContinuousDeployment\Datapatches\common\fix01.datapatch.all.sql" />
-    <None Include="ContinuousDeployment\Datapatches\targetDb01\_db01.main.datapatch.sql" />
-    <None Include="ContinuousDeployment\Datapatches\targetDb02\_db02.main.datapatch.sql" />
-    <Build Include="dbo\Tables\sampleData.sql" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="ContinuousDeployment\Datapatches\common\fix02.datapatch.all.sql" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="ContinuousDeployment\Datapatches\common\fix03.datapatch.set.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
+    <None Include="ContinuousDeployment\Datapatches\targetDb01\_db01.main.datapatch.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ContinuousDeployment\Datapatches\targetDb02\_db02.main.datapatch.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ContinuousDeployment\StaticTables\StaticTableExample.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="ContinuousDeployment\StoredProcedures\sp_execute_cd_script.sql" />
+    <Build Include="ContinuousDeployment\StoredProcedures\sp_generate_merge.sql" />
+    <Build Include="ContinuousDeployment\Tables\__MigrationLog.sql" />
+    <None Include="ContinuousDeployment\1.PreDeployment.Updates.sql" />
+    <None Include="ContinuousDeployment\2.PostDeployment.StaticTablesList.sql" />
+    <None Include="ContinuousDeployment\3.PostDeployment.Updates.sql" />
+    <Build Include="dbo\Tables\sampleData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ContinuousDeployment\1.PreDeployment.Updates.sql" />
-    <None Include="ContinuousDeployment\3.PostDeployment.Updates.sql" />
-    <None Include="ContinuousDeployment\2.PostDeployment.StaticTablesList.sql" />
-    <None Include="ContinuousDeployment\StaticTables\StaticTableExample.sql" />
+    <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>
