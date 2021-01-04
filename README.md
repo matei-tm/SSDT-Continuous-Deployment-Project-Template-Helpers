@@ -14,9 +14,9 @@
   - [Promoting  "\*.all.sql" files.](#promoting--allsql-files)
     - [Demo](#demo)
     - [Constraints for a valid ALL promotion](#constraints-for-a-valid-all-promotion)
-  - [Promoting  "\*.set.sql" files.](#promoting--setsql-files)
+  - [Promoting  "\*.sub.sql" files.](#promoting--subsql-files)
     - [Demo](#demo-1)
-    - [Constraints for a valid FILTERED SET promotion](#constraints-for-a-valid-filtered-set-promotion)
+    - [Constraints for a valid FILTERED SUBset promotion](#constraints-for-a-valid-filtered-subset-promotion)
     - [Advantages](#advantages)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -56,7 +56,7 @@ If the base schema is distributed to several independent databases, this tool wi
 It works with two naming conventions:
 
 1. A file that is matching "\*.all.sql" will be promoted to all sibling files matching "\*.main.datapatch.sql"
-2. A file that is matching "\*.set.sql" will provide a configuration UI where the user can choose the destination files matching "\*.main.datapatch.sql"
+2. A file that is matching "\*.sub.sql" will provide a configuration UI where the user can choose the destination files matching "\*.main.datapatch.sql"
 
 ## Promoting  "\*.all.sql" files. 
 
@@ -74,15 +74,15 @@ It works with two naming conventions:
 
 ![changepromo-hier](docs/media/changepromo-hier.png)
 
-## Promoting  "\*.set.sql" files. 
+## Promoting  "\*.sub.sql" files. 
 
 ### Demo
 
-![changepromoter-with-set](docs/media/changepromoter-with-set.gif)
+![changepromoter-with-sub](docs/media/changepromoter-with-sub.gif)
 
-### Constraints for a valid FILTERED SET promotion
+### Constraints for a valid FILTERED SUBset promotion
 
-- the subject to promotion must match "*.set.sql"
+- the subject to promotion must match "*.sub.sql"
 - the subject to promotion must be a sql script
 - the subject to promotion must have the "Build Action" as "None"
 - the destination file must match "*.main.datapatch.sql"
@@ -92,7 +92,7 @@ It works with two naming conventions:
 ### Advantages
 
 - the destination files collection can be saved and reused
-- alows filtered set of destination files
+- alows filtered subset of destination files
 - all the files can be checked in a single action
 - the "all" collection is protected from changes
 - the configuration setup is saved as json file

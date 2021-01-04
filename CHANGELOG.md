@@ -5,6 +5,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.2.0] - 2021-01-04
+
+### Changed
+
+* #22. Change promoter. The "change promoter by SET" was renamed as "change promoter by SUBset". The filter was changed from "*.set.sql" to "*.sub.sql"
+
 ## [1.1.0] - 2021-01-04
 
 ### Changed

@@ -10,9 +10,9 @@ EXEC sp_execute_script @sql = 'UPDATE Table....', @author = 'Your Name'
 */
 IF '($DatabaseName)' = 'targetDb01'
 BEGIN
-    :r \Datapatches\targetDb01\_.main.datapatch.sql
+    :r .\Datapatches\targetDb01\_db01.main.datapatch.sql
 END
 IF '($DatabaseName)' = 'targetDb02'
 BEGIN
-    :r \Datapatches\targetDb02\_.main.datapatch.sql
+    :r .\Datapatches\targetDb02\_db02.main.datapatch.sql
 END

@@ -75,7 +75,7 @@
     <None Include="ContinuousDeployment\Datapatches\common\fix02.datapatch.all.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ContinuousDeployment\Datapatches\common\fix03.datapatch.set.sql" />
+    <None Include="ContinuousDeployment\Datapatches\common\fix03.datapatch.sub.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ContinuousDeployment\Datapatches\targetDb01\_db01.main.datapatch.sql" />

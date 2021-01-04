@@ -2,7 +2,7 @@
 -- ---------------------------------------------
 -- | The content was changed by a tool         |
 -- ---------------------------------------------
--- A *.set.sql file will provide a configuration UI allowing a filtered promotion
+-- A *.sub.sql file will provide a configuration UI allowing a filtered promotion
 
 EXEC sp_execute_script @sql ='
 INSERT INTO sample VALUES (1, ''Alfa is a ''''leader'''''');

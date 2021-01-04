@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SSDTDatapatchWrapper.7868B860-066E-4EF7-9C52-BC0084BF9557" Version="1.1.0" Language="en-US" Publisher="Mircea-Tiberiu MATEI" />
+        <Identity Id="SSDTDatapatchWrapper.7868B860-066E-4EF7-9C52-BC0084BF9557" Version="1.2.0" Language="en-US" Publisher="Mircea-Tiberiu MATEI" />
         <DisplayName>SQL Server Database - Helpers for CD template</DisplayName>
         <Description xml:space="preserve">- Datapatch wrapper (wraps the DML statements as parameter for sp_execute_cd_script)
 - Change promoter (spread references to a common script in all qualified siblings)

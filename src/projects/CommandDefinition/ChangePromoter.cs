@@ -28,7 +28,7 @@ namespace DatapatchWrapper
         /// </summary>
         public const int CommandId = 0x0101;
         private const string AllowedAllFilesPattern = ".all.sql";
-        private const string AllowedSetFilesPattern = ".set.sql";
+        private const string AllowedSetFilesPattern = ".sub.sql";
         private const string AllowedExtension = ".sql";
         private const string TargetFileForPromotionPattern = "*.main.datapatch.sql";
 
