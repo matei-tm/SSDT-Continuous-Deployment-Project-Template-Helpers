@@ -1,1 +1,1 @@
-﻿
+﻿PRINT 'start of file'
