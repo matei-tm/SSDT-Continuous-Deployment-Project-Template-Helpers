@@ -93,7 +93,9 @@ namespace FilesProcessor
 
             using (var streamWriter = new StreamWriter(targetFileFullPath, true))
             {
+                streamWriter.WriteLine();
                 streamWriter.WriteLine(referenceString);
+                streamWriter.WriteLine();
             }
 
             return new ProcessingResult(ResultType.Info, targetFileFullPath);
