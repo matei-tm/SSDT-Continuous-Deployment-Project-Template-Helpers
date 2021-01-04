@@ -93,12 +93,19 @@
     <None Include="ContinuousDeployment\1.PreDeployment.Updates.sql" />
     <None Include="ContinuousDeployment\2.PostDeployment.StaticTablesList.sql" />
     <None Include="ContinuousDeployment\3.PostDeployment.Updates.sql" />
-    <Build Include="dbo\Tables\sampleData.sql" />
+    <Build Include="dbo\Tables\sample.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
   </ItemGroup>
 </Project>
